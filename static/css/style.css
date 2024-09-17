@@ -1,0 +1,116 @@
+/* Asterisk wildcard selector to override default styles added by the browser */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F9FAFC;
+}
+
+/* Home page css for cover template */
+.cover-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    background: url('https://fastly.picsum.photos/id/46/3264/2448.jpg?hmac=ZHE8nk-Q9uRp4MxgKNvN7V7pYFvA-9BCv99ltY3HBv4') no-repeat center center;
+    background-size: cover;
+}
+.cover-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cover-heading {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.cover-subheading {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+.btn-custom {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Allauth Templates */
+.card-body form .form-group {
+    margin-bottom: 1rem; /* To add space between input fields */
+}
+
+label .asteriskField {
+    display: none; /* To remove astrix from labels of input fields */
+}
+
+/* Social sign up & Sign in buttons */
+.social-login-buttons .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.social-login-buttons .btn i {
+    margin-right: 8px;
+}
+
+/* Divider line under Social sign up buttons */
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.divider::before {
+    content: "";
+    display: block;
+    border-top: 1px solid #ccc; /* Adjust color as needed */
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.divider-text {
+    display: inline-block;
+    background: #fff; /* Adjust background color as needed */
+    padding: 0 10px; /* Adjust padding as needed */
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Loader styles */
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's above other content */
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.4em;
+}
+
+/* Hide loader once the content is loaded */
+.loaded .loader-overlay {
+    display: none;
+}
