@@ -16,3 +16,4 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 django-allauth==64.2.1
 django-crispy-forms==1.14.0
+whitenoise==6.7.0
