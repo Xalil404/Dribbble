@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'crispy_forms',
     'home',
+    'contact',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
