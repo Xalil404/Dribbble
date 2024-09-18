@@ -17,6 +17,38 @@ footer {
     background-color: #F9FAFC;
 }
 
+
+/* User Carousel */
+.user-carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    animation: scroll 35s linear infinite;
+}
+
+.user-item {
+    flex-shrink: 0;
+    width: 400px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
 /* Home page css for cover template */
 .cover-container {
     position: relative;
