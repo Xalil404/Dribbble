@@ -112,12 +112,6 @@ label .asteriskField {
 }
 
 
-
-
-
-
-
-
 /* Loader styles */
 .loader-overlay {
     position: fixed;
@@ -285,3 +279,4 @@ label .asteriskField {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Transparent background for overlay text */
 }
+
