@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Featured Post (Full Width) -->
+        {% if post_list %}
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0">
+                <!-- Post Image -->
+                <div class="position-relative image-container">
+                    {% if "placeholder" in post_list.0.featured_image.url %}
+                    <img class="card-img-top img-fluid fixed-image" src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" alt="Blog Image">
+                    {% else %}
+                    <img class="card-img-top img-fluid fixed-image" src="{{ post_list.0.featured_image.url }}" alt="{{ post_list.0.title }}">
+                    {% endif %}
+                    <div class="overlay">
+                        <p class="text-white bg-dark p-1 position-absolute bottom-0 start-0">Author: {{ post_list.0.author }}</p>
+                    </div>
+                </div>
+
+                <!-- Post Content -->
+                <div class="card-body">
+                    <a href="{% url 'post_detail' post_list.0.slug  %}" class="post-link text-decoration-none text-dark">
+                        <h3 class="card-title font-weight-bold">{{ post_list.0.title }}</h3>
+                    </a>
+                    <p class="card-text text-muted">{{ post_list.0.excerpt }}</p>
+                </div>
+
+                <!-- Post Meta -->
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                    <p class="text-muted mb-0 small">{{ post_list.0.created_on|date:"F j, Y" }}</p>
+                    <p class="text-muted mb-0 small">
+                        <i class="far fa-heart text-danger"></i> {{ post_list.0.number_of_likes }}
+                    </p>
+                    <p class="text-muted mb-0 small">
+                        <i class="far fa-comment"></i> {{ post_list.0.number_of_comments }}
+                    </p>
+                    <p class="text-muted mb-0 small">
+                        <i class="fas fa-eye"></i> {{ post_list.0.number_of_views }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Remaining Blog Posts (Two Columns) -->
+        <div class="col-12">
+            <div class="row">
+                {% for post in post_list|slice:"1:" %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <!-- Post Image -->
+                        <div class="position-relative image-container">
+                            {% if "placeholder" in post.featured_image.url %}
+                            <img class="card-img-top img-fluid fixed-image" src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" alt="Blog Image">
+                            {% else %}
+                            <img class="card-img-top img-fluid fixed-image" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                            {% endif %}
+                            <div class="overlay">
+                                <p class="text-white bg-dark p-1 position-absolute bottom-0 start-0">Author: {{ post.author }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Post Content -->
+                        <div class="card-body">
+                            <a href="{% url 'post_detail' post.slug  %}" class="post-link text-decoration-none text-dark">
+                                <h5 class="card-title font-weight-bold">{{ post.title }}</h5>
+                            </a>
+                            <p class="card-text text-muted">{{ post.excerpt }}</p>
+                        </div>
+
+                        <!-- Post Meta -->
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <p class="text-muted mb-0 small">{{ post.created_on|date:"F j, Y" }}</p>
+                            <p class="text-muted mb-0 small">
+                                <i class="far fa-heart text-danger"></i> {{ post.number_of_likes }}
+                            </p>
+                            <p class="text-muted mb-0 small">
+                                <i class="far fa-comment"></i> {{ post.number_of_comments }}
+                            </p>
+                            <p class="text-muted mb-0 small">
+                                <i class="fas fa-eye"></i> {{ post.number_of_views }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a>
+            </li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">NEXT &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
