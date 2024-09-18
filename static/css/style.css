@@ -9,6 +9,14 @@ body {
     background-color: #F9FAFC;
 }
 
+.navcolor {
+    background-color: #F9FAFC;
+}
+
+footer {
+    background-color: #F9FAFC;
+}
+
 /* Home page css for cover template */
 .cover-container {
     position: relative;
@@ -42,6 +50,10 @@ body {
 }
 
 /* Allauth Templates */
+.card-header-custom {
+    background-color: #F9FAFC;
+}
+
 .card-body form .form-group {
     margin-bottom: 1rem; /* To add space between input fields */
 }
@@ -53,9 +65,10 @@ label .asteriskField {
 /* Social sign up & Sign in buttons */
 .social-login-buttons .btn {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     font-size: 16px;
     margin-bottom: 10px;
+    border-radius: 12px
 }
 
 .social-login-buttons .btn i {
@@ -82,11 +95,27 @@ label .asteriskField {
 
 .divider-text {
     display: inline-block;
-    background: #fff; /* Adjust background color as needed */
+    background: #F9FAFC; /* Adjust background color as needed */
     padding: 0 10px; /* Adjust padding as needed */
     position: relative;
     z-index: 2;
 }
+
+/*hide header and footer on sign up/login pages*/
+.login-page .navbar,
+    .login-page footer {
+        display: none !important;
+}
+
+.card-logout {
+    background-color: #F9FAFC;
+}
+
+
+
+
+
+
 
 
 /* Loader styles */
@@ -222,27 +251,6 @@ label .asteriskField {
     color: lightgray;
 }
 
-.btn-signup {
-    background-color: #23BBBB;
-    color: #fff;
-}
-
-.btn-signup:hover,
-.btn-signup:active {
-    background-color: #fff;
-    color: #23BBBB;
-}
-
-.link {
-    color: #23BBBB;
-    text-decoration: none;
-}
-
-.link:hover,
-.link:active {
-    color: #445261;
-    text-decoration: underline;
-}
 
 .btn-like {
     color: #E84610;
