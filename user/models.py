@@ -16,10 +16,12 @@ class Profile(models.Model):
 
 class Work(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    work_image = models.ImageField(upload_to='user_works/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    project_title = models.CharField(max_length=200, null=True, blank=True)
+    live_link = models.URLField(null=True, blank=True)
+    github_link = models.URLField(null=True, blank=True)
+    project_image = CloudinaryField('image', null=True, blank=True)
+    additional_notes = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.title

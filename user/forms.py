@@ -1,8 +1,9 @@
 from django import forms
-from .models import Profile
+from .models import Profile, Work
 from django_summernote.widgets import SummernoteWidget
 
 
+# Edit profile
 class ProfileForm(forms.ModelForm):
     reset_profile_picture = forms.BooleanField(required=False, label="Reset to default profile picture")
 
@@ -20,3 +21,17 @@ class ProfileForm(forms.ModelForm):
         return picture
 
 
+#Upload project to profile
+class WorkForm(forms.ModelForm):
+    class Meta:
+        model = Work
+        fields = ['project_title', 'live_link', 'github_link', 'project_image', 'additional_notes']
+        widgets = {
+            'additional_notes': SummernoteWidget(),  # Use SummernoteWidget for the content field
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        for field in self.fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, f"{field.replace('_', ' ').capitalize()} is required.")

@@ -3,7 +3,9 @@ from .models import Profile, Work, Post, Like
 from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm
+from .forms import ProfileForm, WorkForm
+from django.urls import reverse
+
 
 
 def profile_view(request, username):
@@ -41,3 +43,17 @@ def update_profile(request):
     
     return render(request, 'user/profile.html', {'form': form})
 
+
+@login_required
+def upload_work(request):
+    if request.method == 'POST':
+        form = WorkForm(request.POST, request.FILES)
+        if form.is_valid():
+            work = form.save(commit=False)
+            work.user = request.user
+            work.save()
+            return redirect(reverse('profile', kwargs={'username': request.user.username}))  # Adjust this line
+    else:
+        form = WorkForm()
+    
+    return render(request, 'user/upload_work.html', {'form': form})

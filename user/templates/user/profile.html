@@ -21,7 +21,7 @@
                 <h1>{{ profile.user.username }}</h1>
                 {% if user.is_authenticated %}
                 <div class="mt-4">
-                    <a href="" class="btn btn-dark me-2">Add Work</a>
+                    <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
                     <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
                     <a href="" class="btn btn-dark">Share Profile</a>
                 </div>
@@ -57,15 +57,17 @@
                 <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
                     <div class="row">
                         {% for work in works %}
-                            <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <img src="{{ work.work_image.url }}" class="card-img-top img-fluid" alt="{{ work.title }}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ work.title }}</h5>
-                                        <p class="card-text">{{ work.description }}</p>
-                                    </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ work.project_title }}</h5>
+                                    <p class="card-text">{{ work.additional_notes }}</p>
+                                    <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
+                                    <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
                                 </div>
                             </div>
+                        </div>
                         {% empty %}
                         <div class="container mt-5">
                             <div class="row">
