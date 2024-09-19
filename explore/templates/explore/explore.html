@@ -11,29 +11,33 @@
 
 {% block content %}
 
-<div class="container mt-5"></div>
+<div class="container mt-5">
     <div class="row">
 
-        <!-- Left Column for Text and Button -->
+        <!-- Left Column for Image -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726745407/2_b1encg.png" class="img-fluid" alt="Web Talent Image">
+        </div>
+
+        <!-- Right Column for Text and Button -->
         <div class="col-md-6 d-flex align-items-center">
             <div class="content-wrapper px-5">
                 <div>
-                    <h1 class="display-4 mb-4 fw-bold"> The world’s destination for web talent</h1>
-                    <h5 class="mb-4">Get inspired by the works of millions of top-rated web developers from around the world.</h5>
+                    <h1 class="display-4 mb-4 fw-bold">Discover the world’s up and coming developers & creatives</h1>
+                    <h5 class="mb-4">DevBook is the leading destination to find & showcase creative work and home to the world's newest web development professionals.</h5>
                     <div class="text-center">
-                    <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Get Started</a>
+                        <form action="" method="get" class="d-flex justify-content-center"></form>
+                            <input type="text" name="query" class="form-control rounded-pill px-4 py-2" placeholder="Search for your next inspiration">
+                            
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column for Image -->
-        <div class="col-md-6 d-flex justify-content-center align-items-center">
-            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726679728/4_kljgyn.png" class="img-fluid" alt="Web Talent Image">
-        </div>
-
     </div>
 </div>
+
 
 
 
