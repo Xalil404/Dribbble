@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center text-dark pt-5 card-logout">
-                    <h2>{% trans "Sign Out" %}</h2>
+                    <h2 class="fw-bold">Sign Out</h2>
                 </div>
                 <div class="card-body text-center text-dark pb-5"> 
                     <p>{% trans "Are you sure you want to sign out?" %}</p>
@@ -28,7 +28,7 @@
                     <form method="POST" action="{% url 'account_logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger btn-lg me-4">{% trans "Sign Out" %}</button>
-                        <a href="javascript:history.back()" class="btn btn-secondary ml-4 btn-lg">{% trans "Cancel" %}</a>
+                        <a href="javascript:history.back()" class="btn btn-dark ml-4 btn-lg">{% trans "Cancel" %}</a>
                     </form>
                 </div>
             </div>

@@ -2,87 +2,183 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <!-- Profile Section -->
-        <div class="col-md-3">
-            <div class="card">
+<div class="container mt-5"></div>
+    <div class="row justify-content-center">
+        <!-- Profile Image and Name Section -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <!-- Profile Image -->
+            <div class="text-center me-4">
                 {% if profile.profile_picture %}
-                    <img src="{{ profile.profile_picture.url }}" class="card-img-top img-fluid" alt="{{ profile.user.username }}">
+                    <img src="{{ profile.profile_picture.url }}" class="rounded circle" alt="{{ profile.user.username }}" style="width: 200px; height: 200px;">
                 {% else %}
-                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png" class="card-img-top img-fluid" alt="{{ profile.user.username }}">
+                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png" class="rounded circle" alt="{{ profile.user.username }}" style="width: 200px; height: 200px;">
                 {% endif %}
-                <div class="card-body text-center">
-                    <h3 class="card-title">{{ profile.user.username }}</h3>
-                    <p class="card-text">{{ profile.bio }}</p>
+            </div>
+            <!-- User Info -->
+            <div>
+                <h1>{{ profile.user.username }}</h1>
+                {% if user.is_authenticated %}
+                <div class="mt-4">
+                    <a href="" class="btn btn-dark me-2">Add Work</a>
+                    <a href="" class="btn btn-light me-2" style="border: 2px solid black;">Edit Profile</a>
+                    <a href="" class="btn btn-dark">Share Profile</a>
+                </div>
+                {% else %}
+                <div class="mt-4">
+                    <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active text-dark" id="work-tab" data-bs-toggle="tab" href="#work" role="tab" aria-controls="work" aria-selected="true">Uploaded Work</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link text-dark" id="posts-tab" data-bs-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">Posts</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link text-dark" id="liked-works-tab" data-bs-toggle="tab" href="#liked-works" role="tab" aria-controls="liked-works" aria-selected="false">Liked Works</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link text-dark" id="bio-tab" data-bs-toggle="tab" href="#bio" role="tab" aria-controls="bio" aria-selected="false">Bio</a>
+                </li>
+            </ul>
+            <div class="tab-content mt-3" id="profileTabsContent">
+                <!-- Work Tab -->
+                <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
+                    <div class="row">
+                        {% for work in works %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{ work.work_image.url }}" class="card-img-top img-fluid" alt="{{ work.title }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ work.title }}</h5>
+                                        <p class="card-text">{{ work.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                        <div class="container mt-5">
+                            <div class="row">
+                                <!-- Left Column for Text -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="content-wrapper px-5">
+                                        <div>
+                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right Column for Image -->
+                                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Posts Tab -->
+                <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                    <ul class="list-group">
+                        {% for post in posts %}
+                            <li class="list-group-item">
+                                <h5>{{ post.title }}</h5>
+                                <p>{{ post.content }}</p>
+                                <small>Posted on {{ post.created_at }}</small>
+                            </li>
+                        {% empty %}
+                        <div class="container mt-5">
+                            <div class="row">
+                                <!-- Left Column for Text -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="content-wrapper px-5">
+                                        <div>
+                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                            <h5 class="mb-4">Nothing has been posted yet.</h5>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right Column for Image -->
+                                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Liked Works Tab -->
+                <div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
+                    <div class="row">
+                        {% for like in liked_works %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{ like.work.work_image.url }}" class="card-img-top img-fluid" alt="{{ like.work.title }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ like.work.title }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                        <div class="container mt-5">
+                            <div class="row">
+                                <!-- Left Column for Text -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="content-wrapper px-5">
+                                        <div>
+                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                            <h5 class="mb-4">Nothing has been liked yet.</h5>
+                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right Column for Image -->
+                                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Bio Tab -->
+                <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
+                    <div class="container mt-5">
+                        <div class="row">
+                            <!-- Left Column for Text -->
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="content-wrapper px-5">
+                                    <div>
+                                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                        <h5 class="mb-4">Looks like we're in incognito mode.</h5>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Right Column for Image -->
+                            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                                    alt="Web Talent Image" style="width: 400px; height: 400px;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Work Section -->
-        <div class="col-md-9">
-            <h4>Uploaded Works</h4>
-            <div class="row">
-                {% for work in works %}
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <img src="{{ work.work_image.url }}" class="card-img-top img-fluid" alt="{{ work.title }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ work.title }}</h5>
-                                <p class="card-text">{{ work.description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No work uploaded yet.</p>
-                {% endfor %}
-            </div>
-
-            <!-- Posts Section -->
-            <h4>User Posts</h4>
-            <ul class="list-group mb-4">
-                {% for post in posts %}
-                    <li class="list-group-item">
-                        <h5>{{ post.title }}</h5>
-                        <p>{{ post.content }}</p>
-                        <small>Posted on {{ post.created_at }}</small>
-                    </li>
-                {% empty %}
-                    <p>No posts yet.</p>
-                {% endfor %}
-            </ul>
-
-            <!-- Liked Works Section -->
-            <h4>Liked Works</h4>
-            <div class="row">
-                {% for like in liked_works %}
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <img src="{{ like.work.work_image.url }}" class="card-img-top img-fluid" alt="{{ like.work.title }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ like.work.title }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No liked works yet.</p>
-                {% endfor %}
-            </div>
-
-            <!-- Liked Posts Section -->
-            <h4>Liked Posts</h4>
-            <ul class="list-group">
-                {% for like in liked_posts %}
-                    <li class="list-group-item">
-                        <h5>{{ like.post.title }}</h5>
-                        <p>{{ like.post.content }}</p>
-                        <small>Posted on {{ like.post.created_at }}</small>
-                    </li>
-                {% empty %}
-                    <p>No liked posts yet.</p>
-                {% endfor %}
-            </ul>
-        </div>
     </div>
 </div>
+
 {% endblock content %}

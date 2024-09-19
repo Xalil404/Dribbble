@@ -317,3 +317,7 @@ label .asteriskField {
     background-color: rgba(0, 0, 0, 0.5); /* Transparent background for overlay text */
 }
 
+/* Profile */
+.nav-tabs {
+    border-bottom: 2px solid black;
+}
