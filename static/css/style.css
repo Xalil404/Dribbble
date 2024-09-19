@@ -321,3 +321,10 @@ label .asteriskField {
 .nav-tabs {
     border-bottom: 2px solid black;
 }
+
+.heading-center {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    font-weight: bold;
+}

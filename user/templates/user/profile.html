@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
+
 {% block content %}
-<div class="container mt-5"></div>
+<div class="container mt-5">
     <div class="row justify-content-center">
         <!-- Profile Image and Name Section -->
         <div class="col-md-6 d-flex align-items-center justify-content-center">
@@ -20,7 +22,7 @@
                 {% if user.is_authenticated %}
                 <div class="mt-4">
                     <a href="" class="btn btn-dark me-2">Add Work</a>
-                    <a href="" class="btn btn-light me-2" style="border: 2px solid black;">Edit Profile</a>
+                    <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
                     <a href="" class="btn btn-dark">Share Profile</a>
                 </div>
                 {% else %}
@@ -154,31 +156,86 @@
                         {% endfor %}
                     </div>
                 </div>
+                
                 <!-- Bio Tab -->
                 <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
                     <div class="container mt-5">
+                        {% if profile.bio %}
                         <div class="row">
-                            <!-- Left Column for Text -->
-                            <div class="col-md-6 d-flex align-items-center">
-                                <div class="content-wrapper px-5">
-                                    <div>
-                                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                                        <h5 class="mb-4">Looks like we're in incognito mode.</h5>
-                    
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Biography</h5>
+                                        <p class="card-text">{{ profile.bio }}</p>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Right Column for Image -->
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="content-wrapper px-5">
+                                    <div>
+                                        <h1 class="display-4 mb-4 fw-bold">No Bio Available</h1>
+                                        <h5 class="mb-4">This user has not added a bio yet.</h5>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-6 d-flex justify-content-center align-items-center">
                                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                                    alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                    alt="No Bio Image" style="width: 400px; height: 400px;">
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
+                <!--End of bio-->
             </div>
         </div>
     </div>
 </div>
+
+
+
+<!-- Edit profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title heading-center" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data" action="{% url 'update_profile' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="profile_image" class="form-label">Profile Image</label>
+              <input type="file" class="form-control" id="profile_image" name="profile_picture">
+            </div>
+
+            <div class="mb-3">
+                <input type="checkbox" id="reset_profile_picture" name="reset_profile_picture">
+                <label for="reset_profile_picture">Reset to default profile picture</label>
+              </div>
+            
+            <div class="mb-3">
+              <label for="bio" class="form-label">Bio</label>
+              <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_about" class="form-label">About</label>
+                {{ form.about }}
+            </div>
+
+            <button type="submit" class="btn btn-dark btn-lg w-100">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 {% endblock content %}
