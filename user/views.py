@@ -57,3 +57,10 @@ def upload_work(request):
         form = WorkForm()
     
     return render(request, 'user/upload_work.html', {'form': form})
+
+
+def delete_work(request, work_id):
+    if request.method == 'POST':
+        work = get_object_or_404(Work, id=work_id)
+        work.delete()
+        return redirect('profile', username=request.user.username) 

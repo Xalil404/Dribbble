@@ -53,7 +53,94 @@
                 </li>
             </ul>
             <div class="tab-content mt-3" id="profileTabsContent">
-                <!-- Work Tab -->
+
+
+<!-- Work Tab -->
+<div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
+    <div class="row">
+        {% for work in works %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">{{ work.project_title|truncatechars:30 }}</h5>
+                        <!-- Dropdown for options -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle p-0" type="button" id="dropdownMenuButton{{ work.id }}"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ⋮
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
+                                <li>
+                                    <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Delete Project</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="card-text">{{ work.additional_notes|truncatechars:40 }}</p>
+                    <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
+                    <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Left Column for Text -->
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="content-wrapper px-5">
+                        <div>
+                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column for Image -->
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                        alt="Web Talent Image" style="width: 400px; height: 400px;">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- 
                 <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
                     <div class="row">
                         {% for work in works %}
@@ -62,6 +149,23 @@
                                 <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ work.project_title }}</h5>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ work.id }}"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        ⋮
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
+        <li>
+            <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">Delete Project</button>
+            </form>
+        </li>
+    </ul>
+</div>
+</div>
+
                                     <p class="card-text">{{ work.additional_notes }}</p>
                                     <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
                                     <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
@@ -71,7 +175,7 @@
                         {% empty %}
                         <div class="container mt-5">
                             <div class="row">
-                                <!-- Left Column for Text -->
+                                
                                 <div class="col-md-6 d-flex align-items-center">
                                     <div class="content-wrapper px-5">
                                         <div>
@@ -81,7 +185,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Right Column for Image -->
+                                
                                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                                     <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
                                         alt="Web Talent Image" style="width: 400px; height: 400px;">
@@ -91,7 +195,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <!-- Posts Tab -->
+                
                 <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                     <ul class="list-group">
                         {% for post in posts %}
@@ -103,7 +207,7 @@
                         {% empty %}
                         <div class="container mt-5">
                             <div class="row">
-                                <!-- Left Column for Text -->
+                                
                                 <div class="col-md-6 d-flex align-items-center">
                                     <div class="content-wrapper px-5">
                                         <div>
@@ -113,7 +217,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Right Column for Image -->
+                                
                                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                                     <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
                                         alt="Web Talent Image" style="width: 400px; height: 400px;">
@@ -123,6 +227,17 @@
                         {% endfor %}
                     </ul>
                 </div>
+            -->
+
+
+
+
+
+
+
+
+
+
                 <!-- Liked Works Tab -->
                 <div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
                     <div class="row">
