@@ -30,9 +30,9 @@
     <!-- Loader -->
     <div class="loader-overlay">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">Loading ...</span>
         </div>
-        <div class="loading-text">Loading, please wait...</div>
+        <div class="loading-text">Loading, please wait ...</div>
     </div>
 
     <!-- Navigation -->
@@ -58,7 +58,7 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link active" href="">Explore</a>
+                        <a class="nav-link active" href="{% url 'explore' %}">Explore</a>
                     </li>
     
                     {% if user.is_authenticated %}
@@ -105,7 +105,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
 
-                        <li><a class="dropdown-item" href="">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' user.username %}">Profile</a></li>
 
                         <li><a class="dropdown-item" href="#">Settings</a></li>
 
