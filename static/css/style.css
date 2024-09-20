@@ -322,10 +322,15 @@ label .asteriskField {
     border-bottom: 2px solid black;
 }
 
-/* Edit Profile Modal */
+/* Edit Profile & View project detail Modals */
 .heading-center {
     text-align: center;
     width: 100%;
     margin: 0 auto;
     font-weight: bold;
+}
+
+/* Hide the arrow of project ellipsis */
+.dropdown-toggle::after {
+    display: none; 
 }

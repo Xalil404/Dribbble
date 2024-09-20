@@ -18,3 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
+
+// JavaScript for pop up to confirm project deletion
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteModal = document.getElementById('deleteConfirmationModal');
+    deleteModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget; // Button that triggered the modal
+        var url = button.getAttribute('data-url'); // Get the URL from data attribute
+        var form = deleteModal.querySelector('#deleteForm');
+        form.action = url; // Set the form action
+        console.log("Delete URL set to:", url); // Debugging
+    });
+});

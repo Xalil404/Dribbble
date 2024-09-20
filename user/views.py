@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, WorkForm
 from django.urls import reverse
 
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
+
 
 
 def profile_view(request, username):
@@ -59,8 +62,26 @@ def upload_work(request):
     return render(request, 'user/upload_work.html', {'form': form})
 
 
+@login_required
 def delete_work(request, work_id):
+    # Use work_id instead of pk
+    work = get_object_or_404(Work, pk=work_id, user=request.user)
+
     if request.method == 'POST':
-        work = get_object_or_404(Work, id=work_id)
         work.delete()
-        return redirect('profile', username=request.user.username) 
+        return redirect('profile', username=request.user.username)
+
+
+@login_required
+def edit_work(request, pk):
+    work = get_object_or_404(Work, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        form = WorkForm(request.POST, request.FILES, instance=work)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', username=request.user.username)  # Redirect to profile after saving
+    else:
+        form = WorkForm(instance=work)
+
+    return render(request, 'user/edit_work.html', {'form': form, 'work': work})

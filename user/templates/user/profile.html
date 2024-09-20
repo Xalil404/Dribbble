@@ -19,19 +19,23 @@
             <!-- User Info -->
             <div>
                 <h1>{{ profile.user.username }}</h1>
-                {% if user.is_authenticated %}
                 <div class="mt-4">
-                    <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
-                    <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
-                    <a href="" class="btn btn-dark">Share Profile</a>
+                    {% if user.is_authenticated %}
+                        {% if profile.user == user %}
+                            <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
+                            <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
+                            <a href="" class="btn btn-dark">Share Profile</a>
+                        {% else %}
+                            <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                            <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                        <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                    {% endif %}
                 </div>
-                {% else %}
-                <div class="mt-4">
-                    <a href="" class="btn btn-dark me-2">Get in Touch</a>
-                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
-                </div>
-                {% endif %}
             </div>
+            
         </div>
     </div>
 
@@ -53,37 +57,89 @@
                 </li>
             </ul>
             <div class="tab-content mt-3" id="profileTabsContent">
+ 
+               
 
 
-<!-- Work Tab -->
+
+
+
+
+
+
+
+
+
+
+
+               <!-- Work Tab -->
 <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
     <div class="row">
         {% for work in works %}
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}">
+            <div class="card border" style="position: relative;">
+                <!-- Project Image with modal trigger -->
+                <a href="javascript:void(0)" class="project-image-link" data-bs-toggle="modal" data-bs-target="#projectDetailsModal{{ work.id }}">
+                    <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
+                </a>
+                <!-- Ellipsis menu in the top-right corner of the image -->
+                {% if work.user == request.user %}
+                <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ work.id }}"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50%; width: 40px; height: 40px;">
+                        ⋮
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
+                        <li>
+                            <a href="{% url 'edit_work' work.id %}" class="dropdown-item">Edit Project</a>
+                        </li>
+                        <!--
+                        <li>
+                            <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Delete Project</button>
+                            </form>
+                        </li>
+                        -->
+                        <li>
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-url="{% url 'delete_work' work.id %}">Delete Project</button>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </div>
+                {% endif %}
+
+                <!-- Project Title and Buttons -->
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <h5 class="card-title">{{ work.project_title|truncatechars:30 }}</h5>
-                        <!-- Dropdown for options -->
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle p-0" type="button" id="dropdownMenuButton{{ work.id }}"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                ⋮
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
-                                <li>
-                                    <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
-                                        {% csrf_token %}
-                                        <button type="submit" class="dropdown-item">Delete Project</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                    <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
+                        <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
                     </div>
-                    <p class="card-text">{{ work.additional_notes|truncatechars:40 }}</p>
-                    <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
-                    <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Project Details -->
+        <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content" style="background-color: #F9FAFC;">
+                    <div class="modal-header">
+                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ work.project_image.url }}" class="img-fluid mb-4" alt="{{ work.project_title }}" style="width: 100%; height: 400px; object-fit: cover;">
+                        <h6 class="heading-center mb-4">Project Details</h6>
+                        <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
+                        <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
+                        <div class="mb-4">
+                            {{ work.additional_notes|safe }} <!-- Renders Summernote content with rich text formatting -->
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,132 +166,51 @@
     </div>
 </div>
 
+               
+               
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- 
-                <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
-                    <div class="row">
-                        {% for work in works %}
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ work.project_title }}</h5>
-
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ work.id }}"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        ⋮
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
-        <li>
-            <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
-                {% csrf_token %}
-                <button type="submit" class="dropdown-item">Delete Project</button>
-            </form>
-        </li>
-    </ul>
-</div>
-</div>
-
-                                    <p class="card-text">{{ work.additional_notes }}</p>
-                                    <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
-                                    <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="container mt-5">
-                            <div class="row">
-                                
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <div class="content-wrapper px-5">
-                                        <div>
-                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
-                        
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
+                <!-- Posts Tab -->
+<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+    <div class="container mt-5">
+        {% if profile.posts %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">User Posts</h5>
+                        <ul class="list-group list-group-flush">
+                            {% for post in profile.posts %}
+                            <li class="list-group-item">
+                                <h6 class="mb-1">{{ post.title }}</h6>
+                                <p class="mb-1">{{ post.content|truncatewords:20 }}</p>
+                                <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-primary">Read More</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                
-                <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                    <ul class="list-group">
-                        {% for post in posts %}
-                            <li class="list-group-item">
-                                <h5>{{ post.title }}</h5>
-                                <p>{{ post.content }}</p>
-                                <small>Posted on {{ post.created_at }}</small>
-                            </li>
-                        {% empty %}
-                        <div class="container mt-5">
-                            <div class="row">
-                                
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <div class="content-wrapper px-5">
-                                        <div>
-                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                                            <h5 class="mb-4">Nothing has been posted yet.</h5>
-                        
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </ul>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="content-wrapper px-5">
+                    <div>
+                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                        <h5 class="mb-4">Nothing has been posted yet.</h5>
+                    </div>
                 </div>
-            -->
-
-
-
-
-
-
-
-
+            </div>
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                    alt="No Posts Image" style="width: 400px; height: 400px;">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 
 
                 <!-- Liked Works Tab -->
@@ -317,7 +292,7 @@
 <!-- Edit profile Modal -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content" style="background-color: #F9FAFC;">
         <div class="modal-header">
           <h5 class="modal-title heading-center" id="editProfileModalLabel">Edit Profile</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -341,17 +316,45 @@
               <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
             </div>
 
-            <div class="mb-3">
-                <label for="id_about" class="form-label">About</label>
-                {{ form.about }}
-            </div>
-
             <button type="submit" class="btn btn-dark btn-lg w-100">Update</button>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+
+  <!-- Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title heading-center" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to delete this project?
+            </div>
+            <div class="modal-body text-center">
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" action="" method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 
 
