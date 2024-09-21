@@ -7,16 +7,13 @@
     <div class="row justify-content-center">
         <!-- Profile Image and Name Section -->
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <!-- Profile Image -->
-            <div class="text-center me-4">
-                {% if profile.profile_picture %}
-                    <img src="{{ profile.profile_picture.url }}" class="rounded circle" alt="{{ profile.user.username }}" style="width: 200px; height: 200px;">
-                {% else %}
-                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png" class="rounded circle" alt="{{ profile.user.username }}" style="width: 200px; height: 200px;">
-                {% endif %}
-            </div>
-    
             
+            <!-- Profile Image -->
+            <div class="text-center me-4" style="width: 200px; height: 200px; overflow: hidden; border-radius: 50%;">
+                <img src="{{ profile.profile_picture.url }}" class="rounded circle" alt="{{ profile.user.username }}"
+                    style="width: 200px; height: 200px;">
+            </div>
+                            
             <!-- User Info -->
             <div>
                 <h1>{{ profile.user.username }}</h1>

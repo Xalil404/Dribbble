@@ -7,7 +7,12 @@ from .models import Profile
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         print(f"Creating profile for user: {instance.username}")
-        Profile.objects.create(user=instance)
+        Profile.objects.create(
+            user=instance,
+            profile_picture='https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png'  # Set the default profile picture here
+        )
+        
+
 
 
 @receiver(post_save, sender=User)

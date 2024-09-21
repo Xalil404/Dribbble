@@ -5,9 +5,15 @@ from cloudinary.models import CloudinaryField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = CloudinaryField('image', default='placeholder')
+    profile_picture = CloudinaryField('image', blank=True, null=True)
     bio = models.TextField(max_length=500, blank=True)
     about = models.TextField(blank=True, null=True)
+
+    # Override the save method to set a default image if none is provided
+    def save(self, *args, **kwargs):
+        if not self.profile_picture:  # If no profile picture is provided
+            self.profile_picture = 'https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png'  # Default Cloudinary URL
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return self.user.username
