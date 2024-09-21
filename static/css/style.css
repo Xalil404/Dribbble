@@ -334,3 +334,24 @@ label .asteriskField {
 .dropdown-toggle::after {
     display: none; 
 }
+
+
+/* Initially shows the down arrow on projects sorting on explore page */
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent; /* Left border */
+    border-right: 5px solid transparent; /* Right border */
+    border-top: 5px solid black; /* Black top border for down arrow */
+    margin-left: 5px;
+    transition: transform 0.3s ease; /* Smooth rotation */
+    padding-bottom: 2px; 
+}
+
+/* When the dropdown is open, remove the top border and add a bottom border */
+.show .arrow {
+    border-top: none; /* Remove the top border */
+    border-bottom: 5px solid black; /* Add bottom border for up arrow */
+    transform: rotate(180deg); /* Rotate for up arrow */
+}
