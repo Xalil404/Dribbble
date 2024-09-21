@@ -23,14 +23,14 @@
                     <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
                     <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;"
                         data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
-                    <a href="" class="btn btn-dark">Share Profile</a>
+                        <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% else %}
                     <a href="" class="btn btn-dark me-2">Get in Touch</a>
                     <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
                     {% endif %}
                     {% else %}
                     <a href="" class="btn btn-dark me-2">Get in Touch</a>
-                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% endif %}
                 </div>
             </div>
@@ -434,8 +434,28 @@
 </div>
 
 
+<!-- Share Profile Modal -->
+<div class="modal fade" id="shareProfileModal" tabindex="-1" aria-labelledby="shareProfileLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title heading-center" id="shareProfileLabel">Share Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Copy the link below to share:</p>
+                <input type="text" id="profileLink" class="form-control" readonly>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark btn-lg" onclick="copyToClipboard()">Copy Link</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<!--Function to show modal and show view count number to not have the two conflict with each other-->
 {% if request.GET.modal %}
     <script>
         $(document).ready(function(){

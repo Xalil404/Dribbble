@@ -32,3 +32,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+// Share Profile Modal
+document.addEventListener('DOMContentLoaded', function () {
+    const shareProfileModal = document.getElementById('shareProfileModal');
+    
+    shareProfileModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const profileUrl = button.getAttribute('data-profile-url'); // Extract info from data-* attributes
+        const profileLinkInput = document.getElementById('profileLink');
+
+        // Update the modal's content.
+        profileLinkInput.value = profileUrl; // Set the profile URL in the input
+    });
+});
+
+function copyToClipboard() {
+    const profileLinkInput = document.getElementById('profileLink');
+    profileLinkInput.select();
+    document.execCommand('copy');
+    alert("Profile link copied to clipboard!");
+}
