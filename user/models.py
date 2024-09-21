@@ -32,6 +32,7 @@ class Work(models.Model):
     def __str__(self):
         return self.title
 
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -41,12 +42,24 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="liked_posts")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="liked_posts", null=True, blank=True)
     work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name="liked_works", null=True, blank=True)
+
+    class Meta:
+        unique_together = ('user', 'post', 'work')  # Ensure a user can only like a post or work once
 
     def __str__(self):
         return f"{self.user.username} liked {self.post.title if self.post else self.work.title}"
 
+
+class View(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Allow null for anonymous users
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name="project_views")
+    viewed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username if self.user else 'Anonymous'} viewed {self.work.project_title}"
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Profile, Work, Post, Like
+from .models import Profile, Work, Post, Like, View
 from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
@@ -9,15 +9,26 @@ from django.urls import reverse
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 
+from django.http import JsonResponse
+
 
 
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
     works = Work.objects.filter(user=user)
+    open_modal_id = request.GET.get('open_modal')
     posts = Post.objects.filter(user=user)
     liked_works = Like.objects.filter(user=user, work__isnull=False).select_related('work')
     liked_posts = Like.objects.filter(user=user, post__isnull=False).select_related('post')
+    works_with_likes = [
+        {
+            'work': work,
+            'number_of_likes': work.liked_works.count(),  # This uses the related name
+        }
+        for work in works
+    ]
+
     
     context = {
         'profile': profile,
@@ -25,6 +36,8 @@ def profile_view(request, username):
         'posts': posts,
         'liked_works': liked_works,
         'liked_posts': liked_posts,
+        'works_with_likes': works_with_likes,
+        'open_modal_id': open_modal_id,
     }
     
     return render(request, 'user/profile.html', context)
@@ -85,3 +98,53 @@ def edit_work(request, pk):
         form = WorkForm(instance=work)
 
     return render(request, 'user/edit_work.html', {'form': form, 'work': work})
+
+
+@login_required
+def like_project(request, project_id):
+    if request.user.is_authenticated:
+        work = get_object_or_404(Work, id=project_id)
+        like, created = Like.objects.get_or_create(user=request.user, work=work)
+
+        if not created:  # User already liked the project, so remove the like
+            like.delete()
+
+        # Redirect back to the project or profile page
+        return redirect('profile', username=request.user.username)  # Or wherever you want to redirect
+
+    return HttpResponse('User not authenticated', status=401)
+
+
+@login_required
+def remove_like(request, like_id):
+    if request.user.is_authenticated:
+        like = get_object_or_404(Like, id=like_id, user=request.user)
+        like.delete()
+        return redirect('profile', username=request.user.username)  # Redirect back to the profile page
+    return redirect('login')
+
+
+def log_project_view(request, project_id):
+    print("log_project_view called")
+    work = get_object_or_404(Work, id=project_id)
+    print(f"Viewing project: {work.project_title}, ID: {work.id}")
+
+    # Log the view for authenticated and anonymous users
+    View.objects.create(user=request.user if request.user.is_authenticated else None, work=work)
+
+    if request.user.is_authenticated:
+        print(f"User {request.user.username} viewed the project.")
+    else:
+        print("Anonymous user viewed the project.")
+
+    # Redirect to the project page, appending the modal query parameter
+    return redirect(f'/profile/{work.user.username}/?modal=projectDetailsModal{work.id}')
+
+
+
+
+
+
+
+
+

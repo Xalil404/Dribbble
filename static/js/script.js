@@ -19,6 +19,7 @@ window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
+
 // JavaScript for pop up to confirm project deletion
 document.addEventListener('DOMContentLoaded', function() {
     var deleteModal = document.getElementById('deleteConfirmationModal');
@@ -30,3 +31,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Delete URL set to:", url); // Debugging
     });
 });
+

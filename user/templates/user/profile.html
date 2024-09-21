@@ -7,33 +7,34 @@
     <div class="row justify-content-center">
         <!-- Profile Image and Name Section -->
         <div class="col-md-6 d-flex align-items-center justify-content-center">
-            
+
             <!-- Profile Image -->
             <div class="text-center me-4" style="width: 200px; height: 200px; overflow: hidden; border-radius: 50%;">
                 <img src="{{ profile.profile_picture.url }}" class="rounded circle" alt="{{ profile.user.username }}"
                     style="width: 200px; height: 200px;">
             </div>
-                            
+
             <!-- User Info -->
             <div>
                 <h1>{{ profile.user.username }}</h1>
                 <div class="mt-4">
                     {% if user.is_authenticated %}
-                        {% if profile.user == user %}
-                            <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
-                            <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
-                            <a href="" class="btn btn-dark">Share Profile</a>
-                        {% else %}
-                            <a href="" class="btn btn-dark me-2">Get in Touch</a>
-                            <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
-                        {% endif %}
+                    {% if profile.user == user %}
+                    <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
+                    <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;"
+                        data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
+                    <a href="" class="btn btn-dark">Share Profile</a>
                     {% else %}
-                        <a href="" class="btn btn-dark me-2">Get in Touch</a>
-                        <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                    <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                    {% endif %}
+                    {% else %}
+                    <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
                     {% endif %}
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -42,21 +43,23 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs" id="profileTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active text-dark" id="work-tab" data-bs-toggle="tab" href="#work" role="tab" aria-controls="work" aria-selected="true">Uploaded Work</a>
+                    <a class="nav-link active text-dark" id="work-tab" data-bs-toggle="tab" href="#work" role="tab"
+                        aria-controls="work" aria-selected="true">Uploaded Work</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="posts-tab" data-bs-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">Posts</a>
+                    <a class="nav-link text-dark" id="posts-tab" data-bs-toggle="tab" href="#posts" role="tab"
+                        aria-controls="posts" aria-selected="false">Posts</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="liked-works-tab" data-bs-toggle="tab" href="#liked-works" role="tab" aria-controls="liked-works" aria-selected="false">Liked Works</a>
+                    <a class="nav-link text-dark" id="liked-works-tab" data-bs-toggle="tab" href="#liked-works"
+                        role="tab" aria-controls="liked-works" aria-selected="false">Liked Works</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="bio-tab" data-bs-toggle="tab" href="#bio" role="tab" aria-controls="bio" aria-selected="false">Bio</a>
+                    <a class="nav-link text-dark" id="bio-tab" data-bs-toggle="tab" href="#bio" role="tab"
+                        aria-controls="bio" aria-selected="false">Bio</a>
                 </li>
             </ul>
             <div class="tab-content mt-3" id="profileTabsContent">
- 
-               
 
 
 
@@ -70,90 +73,254 @@
 
 
 
-               <!-- Work Tab -->
-<div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
+
+
+                <!-- Work Tab -->
+                <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
+                    <div class="row">
+                        {% for work in works %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card border" style="position: relative;">
+
+                                
+                                    <!-- Project Image with modal trigger -->
+                                    <a href="{% url 'log_project_view' work.id %}" class="project-image-link">
+                                        <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}"
+                                            style="width: 100%; height: 250px; object-fit: cover;">
+                                    </a>
+                                
+                                
+                                
+                                <!-- Ellipsis menu in the top-right corner of the image -->
+                                {% if work.user == request.user %}
+                                <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton{{ work.id }}" data-bs-toggle="dropdown"
+                                        aria-expanded="false" style="border-radius: 50%; width: 40px; height: 40px;">
+                                        ⋮
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="dropdownMenuButton{{ work.id }}">
+                                        <li>
+                                            <a href="{% url 'edit_work' work.id %}" class="dropdown-item">Edit
+                                                Project</a>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#deleteConfirmationModal"
+                                                data-url="{% url 'delete_work' work.id %}">Delete Project</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                <!-- Project Title and Buttons -->
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
+                                
+                                        <div class="d-flex align-items-center">
+
+                                        <form action="{% url 'like_project' work.id %}" method="POST" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-danger d-flex align-items-center" title="Like"
+                                                style="border: none; background: transparent;">
+                                                <i class="far fa-heart mb-3 ms-2"></i>
+                                                <span class="text-dark mb-3 small ms-2">{{ work.liked_works.count }}</span>
+                                            </button>
+                                        </form>
+                                
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="fas fa-eye text-muted ms-2" title="Views"></i>
+                                            <span class="text-muted small ms-2" id="view-count-{{ work.id }}">{{ work.project_views.count }}</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                
+                                
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live
+                                            Project</a>
+                                        <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View
+                                            GitHub Repo</a>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Project Details -->
+                        <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1"
+                            aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content" style="background-color: #F9FAFC;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="{{ work.project_image.url }}" class="img-fluid mb-4"
+                                            alt="{{ work.project_title }}"
+                                            style="width: 100%; height: 400px; object-fit: cover;">
+                                        <h6 class="heading-center mb-4">Project Details</h6>
+                                        <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
+                                        <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
+                                        <div class="mb-4">
+                                            {{ work.additional_notes|safe }}
+                                            <!-- Renders Summernote content with rich text formatting -->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="container mt-5">
+                            <div class="row">
+                                <!-- Left Column for Text -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="content-wrapper px-5">
+                                        <div>
+                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Right Column for Image -->
+                                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                        class="img-fluid" alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- Posts Tab -->
+                <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                    <div class="container mt-5">
+                        {% if profile.posts %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">User Posts</h5>
+                                        <ul class="list-group list-group-flush">
+                                            {% for post in profile.posts %}
+                                            <li class="list-group-item">
+                                                <h6 class="mb-1">{{ post.title }}</h6>
+                                                <p class="mb-1">{{ post.content|truncatewords:20 }}</p>
+                                                <a href="{{ post.get_absolute_url }}"
+                                                    class="btn btn-sm btn-primary">Read More</a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="content-wrapper px-5">
+                                    <div>
+                                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                        <h5 class="mb-4">Nothing has been posted yet.</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                    class="img-fluid" alt="No Posts Image" style="width: 400px; height: 400px;">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+<!-- Liked Works Tab -->
+<div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
     <div class="row">
-        {% for work in works %}
+        {% for like in liked_works %}
         <div class="col-md-4 mb-4">
             <div class="card border" style="position: relative;">
                 <!-- Project Image with modal trigger -->
-                <a href="javascript:void(0)" class="project-image-link" data-bs-toggle="modal" data-bs-target="#projectDetailsModal{{ work.id }}">
-                    <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
-                </a>
+                
+                    <img src="{{ like.work.project_image.url }}" class="card-img-top img-fluid" alt="{{ like.work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
+                
+                
                 <!-- Ellipsis menu in the top-right corner of the image -->
-                {% if work.user == request.user %}
+                {% if like.user == request.user %}
                 <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
-                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ work.id }}"
+                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ like.work.id }}"
                         data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50%; width: 40px; height: 40px;">
                         ⋮
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ work.id }}">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ like.work.id }}">
                         <li>
-                            <a href="{% url 'edit_work' work.id %}" class="dropdown-item">Edit Project</a>
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeLikeModal{{ like.work.id }}" title="Remove Like">Remove Like</button>
                         </li>
-                        <!--
-                        <li>
-                            <form action="{% url 'delete_work' work.id %}" method="POST" class="mb-0">
-                                {% csrf_token %}
-                                <button type="submit" class="dropdown-item">Delete Project</button>
-                            </form>
-                        </li>
-                        -->
-                        <li>
-                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-url="{% url 'delete_work' work.id %}">Delete Project</button>
-                        </li>
-                        
-                        
-                        
                     </ul>
                 </div>
                 {% endif %}
 
                 <!-- Project Title and Buttons -->
                 <div class="card-body">
-                    <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
+                    <h5 class="card-title fw-bold mb-3">{{ like.work.project_title|truncatechars:30 }}</h5>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
-                        <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
+                        <a href="{{ like.work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
+                        <a href="{{ like.work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
                     </div>
+                    
                 </div>
             </div>
         </div>
 
-        <!-- Modal for Project Details -->
-        <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content" style="background-color: #F9FAFC;">
+        
+
+        <!-- Modal for Confirming Removal of Like -->
+        <div class="modal fade" id="removeLikeModal{{ like.work.id }}" tabindex="-1" aria-labelledby="removeLikeLabel{{ like.work.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                        <h5 class="modal-title heading-center" id="removeLikeLabel{{ like.work.id }}">Remove Like</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <img src="{{ work.project_image.url }}" class="img-fluid mb-4" alt="{{ work.project_title }}" style="width: 100%; height: 400px; object-fit: cover;">
-                        <h6 class="heading-center mb-4">Project Details</h6>
-                        <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
-                        <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
-                        <div class="mb-4">
-                            {{ work.additional_notes|safe }} <!-- Renders Summernote content with rich text formatting -->
-                        </div>
-                        
+                    <div class="modal-body text-center">
+                        <p>Are you sure you want to remove your liked project?</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                        <form action="{% url 'remove_like' like.id %}" method="POST">
+                            {% csrf_token %}
+                            
+                            <button type="submit" class="btn btn-danger btn-lg">Remove Like</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        
         {% empty %}
         <div class="container mt-5">
             <div class="row">
-                <!-- Left Column for Text -->
                 <div class="col-md-6 d-flex align-items-center">
                     <div class="content-wrapper px-5">
                         <div>
                             <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                            <h5 class="mb-4">Nothing has been liked yet.</h5>
                         </div>
                     </div>
                 </div>
-                <!-- Right Column for Image -->
                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                     <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
                         alt="Web Talent Image" style="width: 400px; height: 400px;">
@@ -164,89 +331,6 @@
     </div>
 </div>
 
-               
-               
-
-
-
-                <!-- Posts Tab -->
-<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-    <div class="container mt-5">
-        {% if profile.posts %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">User Posts</h5>
-                        <ul class="list-group list-group-flush">
-                            {% for post in profile.posts %}
-                            <li class="list-group-item">
-                                <h6 class="mb-1">{{ post.title }}</h6>
-                                <p class="mb-1">{{ post.content|truncatewords:20 }}</p>
-                                <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-primary">Read More</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% else %}
-        <div class="row">
-            <div class="col-md-6 d-flex align-items-center">
-                <div class="content-wrapper px-5">
-                    <div>
-                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                        <h5 class="mb-4">Nothing has been posted yet.</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
-                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                    alt="No Posts Image" style="width: 400px; height: 400px;">
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-
-
-                <!-- Liked Works Tab -->
-                <div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
-                    <div class="row">
-                        {% for like in liked_works %}
-                            <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <img src="{{ like.work.work_image.url }}" class="card-img-top img-fluid" alt="{{ like.work.title }}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ like.work.title }}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        {% empty %}
-                        <div class="container mt-5">
-                            <div class="row">
-                                <!-- Left Column for Text -->
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <div class="content-wrapper px-5">
-                                        <div>
-                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                                            <h5 class="mb-4">Nothing has been liked yet.</h5>
-                        
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Right Column for Image -->
-                                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                                        alt="Web Talent Image" style="width: 400px; height: 400px;">
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                
                 <!-- Bio Tab -->
                 <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
                     <div class="container mt-5">
@@ -255,7 +339,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Biography</h5>
+                                        <h5 class="card-title fw-bold">Biography</h5>
                                         <p class="card-text">{{ profile.bio }}</p>
                                     </div>
                                 </div>
@@ -272,8 +356,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                                    alt="No Bio Image" style="width: 400px; height: 400px;">
+                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                    class="img-fluid" alt="No Bio Image" style="width: 400px; height: 400px;">
                             </div>
                         </div>
                         {% endif %}
@@ -290,41 +374,42 @@
 <!-- Edit profile Modal -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content" style="background-color: #F9FAFC;">
-        <div class="modal-header">
-          <h5 class="modal-title heading-center" id="editProfileModalLabel">Edit Profile</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form method="POST" enctype="multipart/form-data" action="{% url 'update_profile' %}">
-            {% csrf_token %}
-            
-            <div class="mb-3">
-              <label for="profile_image" class="form-label">Profile Image</label>
-              <input type="file" class="form-control" id="profile_image" name="profile_picture">
+        <div class="modal-content" style="background-color: #F9FAFC;">
+            <div class="modal-header">
+                <h5 class="modal-title heading-center" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'update_profile' %}">
+                    {% csrf_token %}
 
-            <div class="mb-3">
-                <input type="checkbox" id="reset_profile_picture" name="reset_profile_picture">
-                <label for="reset_profile_picture">Reset to default profile picture</label>
-              </div>
-            
-            <div class="mb-3">
-              <label for="bio" class="form-label">Bio</label>
-              <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
+                    <div class="mb-3">
+                        <label for="profile_image" class="form-label">Profile Image</label>
+                        <input type="file" class="form-control" id="profile_image" name="profile_picture">
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="checkbox" id="reset_profile_picture" name="reset_profile_picture">
+                        <label for="reset_profile_picture">Reset to default profile picture</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bio" class="form-label">Bio</label>
+                        <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark btn-lg w-100">Update</button>
+                </form>
             </div>
-
-            <button type="submit" class="btn btn-dark btn-lg w-100">Update</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
-  <!-- Delete Confirmation Modal -->
+
 <!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -351,9 +436,13 @@
 
 
 
-
-
-
+{% if request.GET.modal %}
+    <script>
+        $(document).ready(function(){
+            $('#{{ request.GET.modal }}').modal('show');
+        });
+    </script>
+{% endif %}
 
 
 {% endblock content %}
