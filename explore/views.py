@@ -1,5 +1,6 @@
 from django.shortcuts import render
+from user.models import Work
 
-# Create your views here.
 def explore(request):
-    return render(request, 'explore/explore.html')
+    works = Work.objects.all()
+    return render(request, 'explore/explore.html', {'works': works})
