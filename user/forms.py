@@ -2,6 +2,8 @@ from django import forms
 from .models import Profile, Work
 from django_summernote.widgets import SummernoteWidget
 
+from .models import Comment
+
 
 # Edit profile
 class ProfileForm(forms.ModelForm):
@@ -35,3 +37,13 @@ class WorkForm(forms.ModelForm):
         for field in self.fields:
             if not cleaned_data.get(field):
                 self.add_error(field, f"{field.replace('_', ' ').capitalize()} is required.")
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'body']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write a comment...', 'rows': 4}),
+        }

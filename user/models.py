@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = CloudinaryField('image', blank=True, null=True)
@@ -63,3 +65,12 @@ class View(models.Model):
     def __str__(self):
         return f"{self.user.username if self.user else 'Anonymous'} viewed {self.work.project_title}"
 
+
+class Comment(models.Model):
+    work = models.ForeignKey(Work, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.project}'

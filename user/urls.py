@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import upload_work, delete_work, edit_work, like_project, remove_like, log_project_view 
+from .views import upload_work, delete_work, edit_work, like_project, remove_like, log_project_view
 
 
 urlpatterns = [

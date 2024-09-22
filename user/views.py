@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Profile, Work, Post, Like, View
+from .models import Profile, Work, Post, Like, View, Comment
 from django.contrib.auth.models import User
 
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, WorkForm
+from .forms import ProfileForm, WorkForm, CommentForm
 from django.urls import reverse
 
 from django.views.generic import UpdateView
@@ -21,6 +21,7 @@ def profile_view(request, username):
     posts = Post.objects.filter(user=user)
     liked_works = Like.objects.filter(user=user, work__isnull=False).select_related('work')
     liked_posts = Like.objects.filter(user=user, post__isnull=False).select_related('post')
+    comments = Comment.objects.all() 
     works_with_likes = [
         {
             'work': work,
@@ -38,6 +39,7 @@ def profile_view(request, username):
         'liked_posts': liked_posts,
         'works_with_likes': works_with_likes,
         'open_modal_id': open_modal_id,
+        'comments': comments,
     }
     
     return render(request, 'user/profile.html', context)
@@ -124,6 +126,7 @@ def remove_like(request, like_id):
     return redirect('login')
 
 
+#This view answers for project views and project comments
 def log_project_view(request, project_id):
     print("log_project_view called")
     work = get_object_or_404(Work, id=project_id)
@@ -137,14 +140,17 @@ def log_project_view(request, project_id):
     else:
         print("Anonymous user viewed the project.")
 
-    # Redirect to the project page, appending the modal query parameter
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        body = request.POST.get('body')
+        comment = Comment(work=work, name=request.user.username, body=body)
+        comment.save()
+        print(f'Comment submitted: {name}, {body}')  # Debug line
+
+    # Fetch comments to pass them to the modal context
+    comments = Comment.objects.filter(work=work)
+
+    # Redirect to the profile page, include the comments in context if needed
     return redirect(f'/profile/{work.user.username}/?modal=projectDetailsModal{work.id}')
-
-
-
-
-
-
-
 
 
