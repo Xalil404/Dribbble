@@ -27,6 +27,7 @@ window.addEventListener('load', () => {
 
 
 
+
 // JavaScript for pop up to confirm project deletion
 document.addEventListener('DOMContentLoaded', function() {
     var deleteModal = document.getElementById('deleteConfirmationModal');
