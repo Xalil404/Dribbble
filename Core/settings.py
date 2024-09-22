@@ -29,8 +29,8 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
 
 # For summernote to work in production
@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     'blog',
     'user',
     'explore',
+    'inbox',
+    'feed',
 ]
 
 
