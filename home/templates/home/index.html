@@ -21,7 +21,13 @@
                     <h1 class="display-4 mb-4 fw-bold"> The world’s destination for web talent</h1>
                     <h5 class="mb-4">Get inspired by the works of millions of top-rated web developers from around the world.</h5>
                     <div class="text-center">
-                    <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Get Started</a>
+       
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'explore' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Explore Projects</a>
+                    {% else %}
+                        <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Get Started</a>
+                    {% endif %}
+                    
                     </div>
                 </div>
             </div>
@@ -42,57 +48,57 @@
             <!-- User 1 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685047/Group_958_ehwgri.png" class="rounded-circle mb-3" alt="User 1" style="width: 350px; height: 350px;">
-                <h6>User Name 1</h6>
+                <h6>James Anderson</h6>
                 <p>Web Developer</p>
             </div>
 
             <!-- User 2 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png" class="rounded-circle mb-3" alt="User 2" style="width: 350px; height: 350px;">
-                <h6>User Name 2</h6>
+                <h6>Emily Johnson</h6>
                 <p>UI/UX Designer</p>
             </div>
 
             <!-- User 3 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685041/Group_943_xhocdf.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>David Roberts</h6>
+                <p>Data Scientist</p>
             </div>
 
             <!-- User 4 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685046/Mask_group_edk32b.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>William Harris</h6>
+                <p>ML Engineer</p>
             </div>
 
             <!-- User 5 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685038/Group_950_oym0m9.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>Sarah Miller</h6>
+                <p>Illustrator</p>
             </div>
 
             <!-- User 6 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685039/Group_941_umgfkz.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>Michael Thompson</h6>
+                <p>Motion Designer</p>
             </div>
 
             <!-- User 7 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685046/Group_959_ygqcro.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>Emma Davis</h6>
+                <p>Mobile Developer</p>
             </div>
 
             <!-- User 8 -->
             <div class="user-item text-center mx-4">
                 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_942_sfedno.png" class="rounded-circle mb-3" alt="User 3" style="width: 350px; height: 350px;">
-                <h6>User Name 3</h6>
-                <p>Web Developer</p>
+                <h6>Sanjeet Sing</h6>
+                <p>Animations</p>
             </div>
             
         </div>

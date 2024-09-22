@@ -14,21 +14,24 @@
 <div class="container mt-5">
     <div class="row">
 
-        <!-- Left Column for Image -->
+        <!-- Left Column for Hero Image -->
         <div class="col-md-6 d-flex justify-content-center align-items-center">
-            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726745407/2_b1encg.png" class="img-fluid" alt="Web Talent Image">
+            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726745407/2_b1encg.png" class="img-fluid"
+                alt="Web Talent Image">
         </div>
 
-        <!-- Right Column for Text and Button -->
+        <!-- Right Column for Hero image Text -->
         <div class="col-md-6 d-flex align-items-center">
             <div class="content-wrapper px-5">
                 <div>
                     <h1 class="display-4 mb-4 fw-bold">Discover the world’s up and coming developers & creatives</h1>
-                    <h5 class="mb-4">DevBook is the leading destination to find & showcase creative work and home to the world's newest web development professionals.</h5>
+                    <h5 class="mb-4">DevBook is the leading destination to find & showcase creative work and home to the
+                        world's newest web development professionals.</h5>
                     <div class="text-center">
                         <form action="" method="get" class="d-flex justify-content-center"></form>
-                            <input type="text" name="query" class="form-control rounded-pill px-4 py-2" placeholder="Search for your next inspiration">
-                            
+                        <input type="text" name="query" class="form-control rounded-pill px-4 py-2"
+                            placeholder="Search for your next inspiration">
+
                         </form>
                     </div>
                 </div>
@@ -36,123 +39,145 @@
         </div>
 
 
-<!-- Explore inspiring creations Section -->
-<div class="container mt-5">
-    <!-- Heading -->
-    <h1 class="text-center mb-5 fw-bold">Explore inspiring creations</h1>
+        <!-- Explore inspiring creations Section -->
+        <div class="container mt-5">
+            <!-- Heading -->
+            <h1 class="text-center mb-5 fw-bold">Explore inspiring creations</h1>
 
-    <!-- Sort Projects Button -->
-    <div class="mb-3">
-        <!-- Sort Dropdown -->
-        <button class="btn btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border: 1px solid black;">
-            Sort Projects <span class="arrow"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=most_liked">Most Liked</a></li>
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=least_liked">Least Liked</a></li>
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=most_viewed">Most Viewed</a></li>
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=least_viewed">Least Viewed</a></li>
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=newest">Newest Posted</a></li>
-            <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=oldest">Oldest Posted</a></li>
-        </ul>
-    </div>
-    
+            <!-- Sort Projects Button -->
+            <div class="mb-3">
+                <!-- Sort Dropdown -->
+                <button class="btn btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown"
+                    aria-expanded="false" style="border: 1px solid black;">
+                    Sort Projects <span class="arrow"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=most_liked">Most Liked</a></li>
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=least_liked">Least Liked</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=most_viewed">Most Viewed</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=least_viewed">Least Viewed</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=newest">Newest Posted</a></li>
+                    <li><a class="dropdown-item" href="{% url 'explore_projects' %}?sort=oldest">Oldest Posted</a></li>
+                </ul>
+            </div>
 
 
+            <!--Explore projects feed -->
+            <div class="row">
+                {% for work in works %}
+                <div class="col-md-4 mb-4">
+                    <div class="card border" style="position: relative;">
+                        <!-- Project Image with modal trigger -->
+                        <a href="{% url 'log_project_view' work.id %}" class="project-image-link">
+                            <img src="{{ work.project_image.url }}" class="card-img-top img-fluid"
+                                alt="{{ work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
+                        </a>
 
-    <!--Explore projects feed -->
-    <div class="row">
-        {% for work in works %}
-        <div class="col-md-4 mb-4">
-            <div class="card border" style="position: relative;">
-                <!-- Project Image with modal trigger -->
-                <a href="{% url 'log_project_view' work.id %}" class="project-image-link">
-                    <img src="{{ work.project_image.url }}" class="card-img-top img-fluid"
-                        alt="{{ work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
-                </a>
+                        <!-- Project Title and Buttons -->
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
 
-                <!-- Project Title and Buttons -->
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
+                                <div class="d-flex align-items-center">
+                                    <form action="{% url 'like_project' work.id %}" method="POST" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="text-danger d-flex align-items-center" title="Like"
+                                            style="border: none; background: transparent;">
+                                            <i class="far fa-heart mb-3 ms-2"></i>
+                                            <span class="text-dark mb-3 small ms-2">{{ work.liked_works.count }}</span>
+                                        </button>
+                                    </form>
 
-                        <div class="d-flex align-items-center">
-                            <form action="{% url 'like_project' work.id %}" method="POST" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="text-danger d-flex align-items-center" title="Like"
-                                    style="border: none; background: transparent;">
-                                    <i class="far fa-heart mb-3 ms-2"></i>
-                                    <span class="text-dark mb-3 small ms-2">{{ work.liked_works.count }}</span>
-                                </button>
-                            </form>
+                                    <div class="d-flex align-items-center mb-3 ms-3">
+                                        <i class="fas fa-eye text-muted ms-2" title="Views"></i>
+                                        <span class="text-muted small ms-2" id="view-count-{{ work.id }}">{{ work.project_views.count }}</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="d-flex align-items-center mb-3 ms-3">
-                                <i class="fas fa-eye text-muted ms-2" title="Views"></i>
-                                <span class="text-muted small ms-2" id="view-count-{{ work.id }}">{{ work.project_views.count }}</span>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ work.live_link }}" class="btn btn-light rounded-pill" target="_blank"
+                                    style="border: 2px solid black;">View Live Project</a>
+                                <a href="{{ work.github_link }}" class="btn btn-dark rounded-pill" target="_blank">View
+                                    GitHub Repo</a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ work.live_link }}" class="btn btn-light" target="_blank"
-                            style="border: 2px solid black;">View Live Project</a>
-                        <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
-                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Modal for Project Details -->
-        <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1"
-            aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content" style="background-color: #F9FAFC;">
-                    <div class="modal-header">
-                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{
-                            work.project_title }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <img src="{{ work.project_image.url }}" class="img-fluid mb-4" alt="{{ work.project_title }}"
-                            style="width: 100%; height: 400px; object-fit: cover;">
-                        <h6 class="heading-center mb-4">Project Details</h6>
-                        <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link
-                                }}</a></p>
-                        <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link
-                                }}</a></p>
-                        <div class="mb-4">
-                            {{ work.additional_notes|safe }}
-                            <!-- Renders Summernote content with rich text formatting -->
+                <!-- Modal for Project Details -->
+                <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1"
+                    aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content" style="background-color: #F9FAFC;">
+                            <div class="modal-header">
+                                <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="{{ work.project_image.url }}" class="img-fluid mb-4"
+                                    alt="{{ work.project_title }}"
+                                    style="width: 100%; height: 400px; object-fit: cover;">
+                                <h6 class="heading-center mb-4">Project Details</h6>
+                                <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
+                                <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
+                                <div class="mb-4">
+                                    {{ work.additional_notes|safe }}
+                                    <!-- Renders Summernote content with rich text formatting -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        {% empty %}
-        <div class="container mt-5">
-            <div class="row">
-                <!-- Left Column for Text -->
-                <div class="col-md-6 d-flex align-items-center">
-                    <div class="content-wrapper px-5">
-                        <div>
-                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                            <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                {% empty %}
+                <div class="container mt-5">
+                    <div class="row">
+                        <!-- Left Column for Text -->
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="content-wrapper px-5">
+                                <div>
+                                    <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                    <h5 class="mb-4">Nothing has been uploaded yet.</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Column for Image -->
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                class="img-fluid" alt="Web Talent Image" style="width: 400px; height: 400px;">
                         </div>
                     </div>
                 </div>
-                <!-- Right Column for Image -->
-                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
-                        class="img-fluid" alt="Web Talent Image" style="width: 400px; height: 400px;">
-                </div>
+                {% endfor %}
             </div>
+
+            <!-- Load More Button -->
+            {% if has_more %}
+            <div class="text-center mt-4">
+                {% if user.is_authenticated %}
+                <form method="GET">
+                    <!-- Include current sort option in form -->
+                    <input type="hidden" name="sort" value="{{ sort_option }}">
+                    <!-- Pass the new offset value -->
+                    <input type="hidden" name="offset" value="{{ next_offset }}">
+                    <button type="submit" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Load More Projects</button>
+                </form>
+                {% else %}
+                <a href="{% url 'account_signup' %}" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Sign Up to Continue</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
         </div>
-        {% endfor %}
     </div>
 
 </div>
-</div>
+
 
 
 

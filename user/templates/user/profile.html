@@ -26,7 +26,7 @@
                         <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% else %}
                     <a href="" class="btn btn-dark me-2">Get in Touch</a>
-                    <a href="" class="btn btn-light" style="border: 2px solid black;">Share Profile</a>
+                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% endif %}
                     {% else %}
                     <a href="" class="btn btn-dark me-2">Get in Touch</a>
@@ -139,9 +139,9 @@
                                 
                                 
                                     <div class="d-flex justify-content-between">
-                                        <a href="{{ work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live
+                                        <a href="{{ work.live_link }}" class="btn btn-light rounded-pill" target="_blank" style="border: 2px solid black;">View Live
                                             Project</a>
-                                        <a href="{{ work.github_link }}" class="btn btn-dark" target="_blank">View
+                                        <a href="{{ work.github_link }}" class="btn btn-dark rounded-pill" target="_blank">View
                                             GitHub Repo</a>
                                     </div>
                                 
@@ -277,8 +277,8 @@
                 <div class="card-body">
                     <h5 class="card-title fw-bold mb-3">{{ like.work.project_title|truncatechars:30 }}</h5>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ like.work.live_link }}" class="btn btn-light" target="_blank" style="border: 2px solid black;">View Live Project</a>
-                        <a href="{{ like.work.github_link }}" class="btn btn-dark" target="_blank">View GitHub Repo</a>
+                        <a href="{{ like.work.live_link }}" class="btn btn-light rounded-pill" target="_blank" style="border: 2px solid black;">View Live Project</a>
+                        <a href="{{ like.work.github_link }}" class="btn btn-dark rounded-pill" target="_blank">View GitHub Repo</a>
                     </div>
                     
                 </div>

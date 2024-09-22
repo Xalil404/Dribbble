@@ -53,3 +53,6 @@ function copyToClipboard() {
     document.execCommand('copy');
     alert("Profile link copied to clipboard!");
 }
+
+
+// S
