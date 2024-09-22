@@ -8,6 +8,9 @@ def explore(request):
     offset = int(request.GET.get('offset', 0))  # Get the offset (how many projects to skip)
     limit = 10  # Load 10 projects at a time
 
+    # Get all works, ordered by the number of views in descending order
+    works = Work.objects.annotate(view_count=Count('project_views')).order_by('-view_count')
+
     # Get all works
     works = Work.objects.all()
 
@@ -67,6 +70,33 @@ def explore_projects(request):
     })
 
 
+
+def search_results(request):
+    query = request.GET.get('query')
+    offset = int(request.GET.get('offset', 0))  # Get the offset
+    limit = 10  # Load 10 projects at a time
+
+    # Filter results based on the query
+    if query:
+        results = Work.objects.filter(project_title__icontains=query)
+    else:
+        results = Work.objects.none()
+
+    # Limit results based on the offset and limit
+    results = results[offset:offset + limit]
+
+    # Calculate next offset
+    next_offset = offset + limit
+
+    # Get total projects count to check if more projects exist
+    total_results = Work.objects.filter(project_title__icontains=query).count() if query else 0
+
+    return render(request, 'explore/search.html', {
+        'results': results,
+        'query': query,
+        'next_offset': next_offset,
+        'has_more': total_results > next_offset
+    })
 
 
 

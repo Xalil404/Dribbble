@@ -94,8 +94,8 @@
             <div class="d-flex order-2 order-lg-3">
                 <!-- Search Field (Web View) -->
                 <div class="d-none d-lg-block ms-3">
-                    <form class="d-flex">
-                        <input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+                    <form action="{% url 'search_results' %}" method="get" class="d-flex">
+                        <input class="form-control me-2 rounded-pill" type="search" name="query" placeholder="Search" aria-label="Search">
                     </form>
                 </div>
             
@@ -125,11 +125,11 @@
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-search fa-lg text-dark"></i>
                     </a>
-                    <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
-                        <form class="form" method="GET" action="">
+                    <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search" style="background-color: #F9FAFC;">
+                        <form class="form" method="GET" action="{% url 'search_results' %}">
                             <div class="input-group w-100">
-                                <input class="form-control border border-black rounded-0" type="text" name="q"
-                                    placeholder="Search our site">
+                                <input class="form-control border border-black rounded-0" type="text" name="query"
+                                    placeholder="Search for your next inspiration">
                                 <div class="input-group-append">
                                     <button class="btn btn-dark border border-black rounded-0" type="submit">
                                         <i class="fas fa-search"></i>

@@ -28,10 +28,10 @@
                     <h5 class="mb-4">DevBook is the leading destination to find & showcase creative work and home to the
                         world's newest web development professionals.</h5>
                     <div class="text-center">
-                        <form action="" method="get" class="d-flex justify-content-center"></form>
-                        <input type="text" name="query" class="form-control rounded-pill px-4 py-2"
+                        <form action="{% url 'search_results' %}" method="get" class="d-flex justify-content-center">
+                        <input type="search" name="query" class="form-control rounded-pill px-4 py-2"
                             placeholder="Search for your next inspiration">
-
+                            
                         </form>
                     </div>
                 </div>
