@@ -33,12 +33,14 @@
 <body class="d-flex flex-column h-100 main-bg {% block body_class %}base-template{% endblock body_class %}"> 
 
     <!-- Loader -->
-    <div class="loader-overlay">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden mb-5">Loading ...</span>
-        </div>
-        <div class="loading-text mt-3">Loading, please wait ...</div>
+<div class="loader-overlay">
+    <div class="progress" style="width: 25%; height: 30px;"> 
+        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" 
+             role="progressbar" style="width: 0%; height: 30px;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <div class="loading-text mt-3">Loading, please wait ...</div>
+</div>
+
 
 
 
@@ -205,7 +207,7 @@
 
 
 
-
+    
     <script>
         setTimeout(function () {
             let messages = document.getElementById('msg');
@@ -213,6 +215,34 @@
             alert.close();
         }, 2500);
     </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var progressBar = document.getElementById('progress-bar');
+        var progress = 0;
+        var progressText = 'Loading ';
+
+        // Function to increment the progress bar
+        var interval = setInterval(function() {
+            progress += 25;
+            progressBar.style.width = progress + '%';
+            progressBar.setAttribute('aria-valuenow', progress);
+            progressBar.innerText = progress + '%'; // Show the percentage in the progress bar
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Hide the loader after progress reaches 100%
+                document.querySelector('.loader-overlay').style.display = 'none';
+            }
+        }, 1000); // 1 second interval to increment by 25%
+    });
+</script>
+
+
+
+
+
     
 
 

@@ -238,7 +238,12 @@
     <div class="cover-content">
         <h1 class="cover-heading fw-bold">Find your next web development inspiration today</h1>
         <p class="cover-subheading pb-4 pt-4">The world’s leading brands use DevBook to hire creative talent. Browse millions of top-rated portfolios to find your perfect tech match.</p>
+        {% if user.is_authenticated %}
+            <!-- If the user is logged in, take them to the explore page -->
+            <a href="{% url 'explore' %}" class="btn btn-dark btn-custom rounded-pill">Get Started Now</a>
+        {% else %}
         <a href="{% url 'account_signup' %}" class="btn btn-dark btn-custom rounded-pill">Get Started Now</a>
+        {% endif %}
     </div>
 </div>
 
