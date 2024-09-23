@@ -15,14 +15,16 @@
                     <img class="card-img-top img-fluid fixed-image" src="{{ post_list.0.featured_image.url }}" alt="{{ post_list.0.title }}">
                     {% endif %}
                     <div class="overlay">
+                        <!--
                         <p class="text-white bg-dark p-1 position-absolute bottom-0 start-0">Author: {{ post_list.0.author }}</p>
+                    -->
                     </div>
                 </div>
 
                 <!-- Post Content -->
                 <div class="card-body">
                     <a href="{% url 'post_detail' post_list.0.slug  %}" class="post-link text-decoration-none text-dark">
-                        <h3 class="card-title font-weight-bold">{{ post_list.0.title }}</h3>
+                        <h3 class="card-title font-weight-bold fw-bold">{{ post_list.0.title }}</h3>
                     </a>
                     <p class="card-text text-muted">{{ post_list.0.excerpt }}</p>
                 </div>
@@ -58,14 +60,16 @@
                             <img class="card-img-top img-fluid fixed-image" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
                             {% endif %}
                             <div class="overlay">
+                                <!--
                                 <p class="text-white bg-dark p-1 position-absolute bottom-0 start-0">Author: {{ post.author }}</p>
+                                -->
                             </div>
                         </div>
 
                         <!-- Post Content -->
                         <div class="card-body">
                             <a href="{% url 'post_detail' post.slug  %}" class="post-link text-decoration-none text-dark">
-                                <h5 class="card-title font-weight-bold">{{ post.title }}</h5>
+                                <h5 class="card-title font-weight-bold fw-bold">{{ post.title }}</h5>
                             </a>
                             <p class="card-text text-muted">{{ post.excerpt }}</p>
                         </div>
