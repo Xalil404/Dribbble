@@ -32,7 +32,7 @@ class Work(models.Model):
     additional_notes = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return self.project_title or "Untitled Project"
 
 
 class Post(models.Model):
@@ -54,7 +54,7 @@ class Like(models.Model):
         unique_together = ('user', 'post', 'work')  # Ensure a user can only like a post or work once
 
     def __str__(self):
-        return f"{self.user.username} liked {self.post.title if self.post else self.work.title}"
+        return f"{self.user.username} liked {self.post.title if self.post else self.work.project_title}"
 
 
 class View(models.Model):
@@ -73,4 +73,4 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Comment by {self.name} on {self.project}'
+        return f"{self.name} on {self.work.project_title}"
