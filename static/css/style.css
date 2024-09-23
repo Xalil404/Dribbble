@@ -149,36 +149,30 @@ label .asteriskField {
 }
 
 
-/* Styles for progress bar loader*/
+/* Loader styles */
 .loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Slight white overlay */
-    z-index: 9999;
+    background-color: #f8f9fa;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 9999; 
 }
 
-.progress {
-    width: 50%; /* Width of the progress bar */
-    height: 30px; /* Height of the progress bar */
-    background-color: #e9ecef; /* Background color of the progress bar track */
-    border-radius: 5px;
-    overflow: hidden;
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.4em;
 }
 
-.progress-bar {
-    background-color: #007bff; /* Color of the progress fill */
-    height: 100%;
-    transition: width 0.5s ease-in-out; /* Smooth transition for progress */
-    text-align: center;
-    color: white; /* Visible percentage text */
-    font-weight: bold;
+/* Hide loader once the content is loaded */
+.loaded .loader-overlay {
+    display: none;
 }
 
 
