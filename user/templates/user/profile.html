@@ -517,28 +517,36 @@
 
 
 
-<!-- Get in Touch Modal -->
-<div class="modal fade" id="sendMessageModal" tabindex="-1" role="dialog" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+
+
+<!-- Send Message Modal -->
+<div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #F9FAFC;">
             <div class="modal-header">
-                <h5 class="modal-title" id="sendMessageModalLabel">Send a message to: {{ receiver.username }}</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title heading-center" id="sendMessageModalLabel">Send a message to {{ receiver.username }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{% url 'send_message' receiver.username %}">
                     {% csrf_token %}
-                    {{ form.content.label_tag }}  <!-- Optional: Display label for content -->
-                    {{ form.content }}  
-                    <input type="hidden" name="receiver" value="{{ receiver.id }}"> <!-- Set receiver ID -->
-                    <button type="submit" class="btn btn-primary">Send</button>
+
+                    <div class="mb-3">
+                        <label for="messageContent" class="form-label">Message</label>
+                        <textarea class="form-control" id="messageContent" name="content" rows="3"></textarea>
+                    </div>
+
+                    <input type="hidden" name="receiver" value="{{ receiver.id }}">
+                    
+                    <button type="submit" class="btn btn-dark btn-lg w-100">Send</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 
