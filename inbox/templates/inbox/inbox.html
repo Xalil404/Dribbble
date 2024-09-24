@@ -92,12 +92,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel{{ user.username }}">Confirm Deletion</h5>
+                <h5 class="modal-title heading-center" id="deleteModalLabel{{ user.username }}">Confirm Deletion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                Are you sure you want to delete the conversation with {{ user.username }}? This action cannot be undone.
+                Are you sure you want to delete the conversation for both you and {{ user.username }}? 
             </div>
+
+            <div class="text-center mb-3">This action cannot be undone!</div>
+
             <div class="modal-footer d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
                 <form method="POST" action="{% url 'delete_conversation' user.id %}"> <!-- Use the user's ID for the action -->
