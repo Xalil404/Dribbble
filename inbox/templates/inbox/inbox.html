@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<div class="container mt-4">
+  <h2 class="text-center fw-bold mb-3">Messages</h2>
+  <div class="inbox-container">
+      <!-- Users List -->
+      <div class="users-list">
+          <h4 class="fw-bold">Conversations</h4>
+          <ul class="list-group">
+            
+
+            <!-- Ellipsis menu -->
+              {% for user in users %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <a href="?user={{ user.username }}">{{ user.username }}</a>
+
+                     <!-- Ellipsis Menu -->
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ user.username }}" data-bs-toggle="dropdown" aria-expanded="false">
+                      ...
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ user.username }}">
+                    <li>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ user.username }}">Delete Conversation</a>
+                  </li>
+                  </ul>
+              </div>
+              {% endfor %}
+          
+          </ul>
+      </div>
+
+      <!-- Conversation Window -->
+      <div class="conversation-window">
+          <div class="messages">
+              {% if selected_user %}
+              <div class="sticky-header">
+                  <h4 class="fw-bold">Conversation with {{ selected_user.username }}</h4>
+                </div>
+                  <ul class="list-unstyled">
+                      {% for message in conversations|dictsort:"timestamp" %}
+                          {% if message.sender == selected_user or message.receiver == selected_user %}
+                              <li class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                                  {{ message.content }}
+                                  <br>
+                                  <small class="text-muted">{{ message.timestamp }}</small>
+                              </li>
+                          {% endif %}
+                      {% endfor %}
+                  </ul>
+              {% else %}
+                  <h4>Select a user to start a conversation</h4>
+              {% endif %}
+          </div>
+
+          <div class="message-input">
+              <form method="POST" action="{% if selected_user %}{% url 'send_message' selected_user.username %}{% endif %}">
+                  {% csrf_token %}
+                  <div class="form-group d-flex align-items-center">
+                    <input type="text" class="form-control me-2" name="content" rows="1" placeholder="Type your message here..." required>
+                      <input type="hidden" name="receiver" value="{{ selected_user.id }}">
+                  
+                  <button type="submit" class="btn btn-dark" {% if not selected_user %}disabled{% endif %}>Send</button>
+                </div>
+                </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- Delete Conversation Confirmation Modals -->
+{% for user in users %}
+
+<div class="modal fade" id="deleteModal{{ user.username }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ user.username }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ user.username }}">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to delete the conversation with {{ user.username }}? This action cannot be undone.
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'delete_conversation' user.id %}"> <!-- Use the user's ID for the action -->
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

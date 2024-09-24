@@ -25,7 +25,7 @@
                         data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
                         <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% else %}
-                    <a href="" class="btn btn-dark me-2">Get in Touch</a>
+                    <a href="#" class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Get in Touch</a>
                     <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
                     {% endif %}
                     {% else %}
@@ -514,6 +514,32 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Get in Touch Modal -->
+<div class="modal fade" id="sendMessageModal" tabindex="-1" role="dialog" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendMessageModalLabel">Send a message to: {{ receiver.username }}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'send_message' receiver.username %}">
+                    {% csrf_token %}
+                    {{ form.content.label_tag }}  <!-- Optional: Display label for content -->
+                    {{ form.content }}  
+                    <input type="hidden" name="receiver" value="{{ receiver.id }}"> <!-- Set receiver ID -->
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!--Function to show modal and show view count number to not have the two conflict with each other-->

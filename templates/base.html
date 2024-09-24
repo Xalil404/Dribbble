@@ -165,19 +165,23 @@
     </nav>
 </div>
     
-    <!--Sign in / sign out notifications-->
+    <!--Sign in / sign out notifications -->
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
+                {% if not is_messages_page %}  <!--This line is to not show notiifications on inbox page-->
                 {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
                     {{ message | safe }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 {% endfor %}
+                {% endif %}  <!--This line is to not show notiifications on inbox page-->
             </div>
         </div>
     </div>
+
+
 
 
 

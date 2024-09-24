@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 
 from django.http import JsonResponse
 
-
+from inbox.forms import MessageForm
 
 
 
@@ -24,6 +24,8 @@ def profile_view(request, username):
     posts = Post.objects.filter(user=user)
     liked_works = Like.objects.filter(user=user, work__isnull=False).select_related('work')
     liked_posts = Like.objects.filter(user=user, post__isnull=False).select_related('post')
+    form = MessageForm()
+    receiver = get_object_or_404(User, username=username)
     
     if open_modal_id and open_modal_id.isdigit():
         comments = Comment.objects.filter(work__id=int(open_modal_id))
@@ -49,6 +51,8 @@ def profile_view(request, username):
         'works_with_likes': works_with_likes,
         'open_modal_id': open_modal_id,
         'comments': comments,
+        'form': form,
+        'receiver': receiver,
     }
     
     return render(request, 'user/profile.html', context)
