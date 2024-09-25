@@ -82,6 +82,7 @@ def message_index(request):
     # Initialize the message form
     form = MessageForm()
 
+
     return render(request, 'inbox/inbox.html', {
         'conversations': messages,  # Pass filtered messages for the selected user
         'users': users,  # Pass users involved in conversations
@@ -104,5 +105,4 @@ def delete_conversation(request, user_id):
     except Exception as e:
         messages.error(request, "Error deleting conversation.")
     return redirect('inbox')  # Adjust as necessary
-
 
