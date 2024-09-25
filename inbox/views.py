@@ -106,5 +106,3 @@ def delete_conversation(request, user_id):
     return redirect('inbox')  # Adjust as necessary
 
 
-
-
