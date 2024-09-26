@@ -536,7 +536,7 @@ label .asteriskField {
     margin-right: 10px;
 }
 
-
+/* To center posts in the middle of the page */
 .middle-column {
     margin-left: 25%; /* Account for the left fixed column */
     margin-right: 25%; /* Account for the right fixed column */
@@ -544,7 +544,7 @@ label .asteriskField {
     position: relative; /* Retain relative positioning */
 }
 
-
+/* for profile name in posts to go to profile */
 .no-link {
     color: black;           /* Set text color to black */
     text-decoration: none;  /* Remove underline */
