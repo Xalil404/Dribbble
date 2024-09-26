@@ -449,6 +449,224 @@ label .asteriskField {
 
 
 
+/*                                                                Projects Feed Page */
 
+
+.widget-item {
+    background-color: #EFEFEF; /* Light blue background, change to your desired color */
+    border: 1px solid #dcdcdc;
+    border-radius: 5px; /* Optional: for rounded corners */
+    padding: 15px; /* Optional: for spacing inside the item */
+    margin-bottom: 15px; /* Optional: for spacing between items */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.widget-item-2 {
+    background-color: #EFEFEF; /* Light blue background, change to your desired color */
+    border: 1px solid #dcdcdc;
+    border-radius: 8px; /* Optional: for rounded corners */
+    margin-bottom: 15px; /* Optional: for spacing between items */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.right-widget {
+    background-color: #EFEFEF; /* White background or any other color */
+    border: 1px solid #dcdcdc; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Increased padding for a better look */
+    margin-bottom: 20px; /* Spacing between widgets */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+
+/* Left column styles */
+.left-column {
+    position: fixed; /* Makes it fixed like the right column */
+    left: 0; /* Aligns it to the left */
+    width: 25%; /* Same width as the right column */
+    padding: 20px; /* Same padding */
+    background-color: #f9f9f9;
+}
+
+.profile-widget {
+    margin-bottom: 20px; /* Space between widgets */
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Middle column styles */
+
+.middle-column {
+    height: calc(100vh - 150px); /* Adjust height based on your header and footer */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.feed-container {
+    margin-top: 20px;
+}
+.post {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.post-user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.post-project-image {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+.post-feedback {
+    margin-top: 10px;
+}
+.likes, .views {
+    margin-right: 10px;
+}
+
+
+.middle-column {
+    margin-left: 25%; /* Account for the left fixed column */
+    margin-right: 25%; /* Account for the right fixed column */
+    z-index: 1; /* Ensure it stays beneath any other overlays if necessary */
+    position: relative; /* Retain relative positioning */
+}
+
+
+.no-link {
+    color: black;           /* Set text color to black */
+    text-decoration: none;  /* Remove underline */
+}
+
+.no-link:hover {
+    text-decoration: none;  /* Ensure no underline on hover */
+}
+
+
+
+
+
+/* Right column styles */
+.right-column {
+    position: fixed;
+    right: 0;
+    width: 25%;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.right-widget {
+    margin-bottom: 20px 0;
+}
+
+.project-thumbnails {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 10px; /* Space between items */
+
+}
+
+.project-thumbnail {
+    border: 1px solid #ccc; /* Optional border */
+    border-radius: 8px; /* Optional border radius for rounded corners */
+    overflow: hidden; /* Ensure content stays within the box */
+    text-align: center; /* Center the text */
+    background-color: #f9f9f9; /* Optional background color */
+}
+
+.project-thumbnail img {
+    width: 100%; /* Full width to fill the container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Block-level image */
+}
+
+.project-thumbnail p {
+    margin: 10px 0 0; /* Space above the title */
+    font-weight: bold; /* Bold title */
+    color: #333; /* Title color */
+}
+
+
+
+
+
+
+
+/* To scroll most liked and most viewed projects */
+.scrollable-projects {
+    max-height: 290px;  /* Adjust height as needed */
+    overflow-y: auto;   /* Enable vertical scrolling */
+}
+
+.project-thumbnail {
+    margin-bottom: 10px; /* Space between project items */
+}
+
+.project-thumbnail img {
+    height: 100px;       /* Fixed height */
+    width: 100%;         /* Full width */
+    object-fit: cover;   /* Maintain aspect ratio */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Community users css*/
+
+.circle-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.user-list {
+    max-height: 150px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding-right: 10px; /* Add padding for the scrollbar */
+    border: 1px solid #ddd; /* Optional: to add a border */
+    border-radius: 5px; /* Optional: to match the overall design */
+    background-color: #f9f9f9; /* Optional: background color for the list */
+}
+
+/* Optional: style the scrollbar for better visibility */
+.user-list::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.user-list::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+}
+
+.user-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color on hover */
+}
 
 

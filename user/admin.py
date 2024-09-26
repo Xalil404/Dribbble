@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Comment, Work
+from .models import Comment, Work, Post
 
 # To delete project comments
 @admin.register(Comment)
@@ -14,3 +14,12 @@ class CommentAdmin(admin.ModelAdmin):
 class WorkAdmin(admin.ModelAdmin):
     list_display = ('project_title', 'user', 'created_at')  # Customize as needed
     search_fields = ('project_title', 'user__username')  # Add search functionality
+
+
+# To delete projects
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('project_title', 'user', 'created_at')
+    search_fields = ('project_title', 'user__username')
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)

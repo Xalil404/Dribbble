@@ -4,41 +4,368 @@
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
-            <div class="col"></div>
+            <div class="col">
+                <!-- Your header content here -->
+            </div>
         </div>
     </div>
 {% endblock %}
 
+
 {% block content %}
 
-<div class="container mt-5"></div>
+
+
+<div class="container">
     <div class="row">
 
-        <!-- Left Column for Text and Button -->
-        <div class="col-md-6 d-flex align-items-center">
-            <div class="content-wrapper px-5">
-                <div>
-                    <h1 class="display-4 mb-4 fw-bold"> Projects Feed</h1>
-                    <h5 class="mb-4">This your projects feed</h5>
-                    <div class="text-center">
-       
-                        {% if user.is_authenticated %}
-                        <a href="{% url 'explore' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Explore Projects</a>
-                    {% else %}
-                        <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg mt-5 rounded-pill px-5">Get Started</a>
-                    {% endif %}
-                    
+        <!-- Left Column -->
+        <div class="col-md-3 left-column">
+            <!-- Profile Widget -->
+            <div class="card mb-4 widget-item">
+                <div class="card-body text-center">
+                    <!-- Profile Image -->
+                    <div class="text-center mb-3"
+                        style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%; margin: 0 auto;">
+                        <img src="{{ user.profile.profile_picture.url }}" alt="User Profile" class="rounded-circle"
+                            style="width: 100%; height: 100%;">
+                    </div>
+                    <h4 class="username fw-bold">{{ user.username }}</h4>
+                    <hr>
+                   
+<button class="btn btn-dark w-100 py-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#postProjectModal">
+    Post Your Project
+</button>
+                </div>
+            </div>
+
+            <!-- Top 4 Most Viewed Projects -->
+            <div class="card mb-4 widget-item-2">
+                <div class="card-body">
+                    <h5 class="text-center fw-bold mb-3">Top Viewed Projects</h5>
+                    <div class="project-thumbnails scrollable-projects">
+                        {% if top_viewed_projects %}
+                        
+                        {% for work in top_viewed_projects %}
+                        <div class="project-thumbnail">
+                            <!-- Project Image with Modal Trigger -->
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#projectDetailsModal{{ work.id }}">
+                                <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid" style="height: 100px; width: 250px; object-fit: cover;">
+                            </a>
+                            
+                            <!-- Project Title -->
+                            <p>{{ work.project_title|truncatechars:30 }}</p>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                   
+                        <p>No viewed projects found.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right Column for Image -->
-        <div class="col-md-6 d-flex justify-content-center align-items-center">
-            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726679728/4_kljgyn.png" class="img-fluid" alt="Web Talent Image">
-        </div>
 
+<!-- Middle Column (Feed) -->
+<div class="col-md-6 middle-column">
+    <div class="feed-container">
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-header d-flex align-items-center">
+                <img src="{{ post.user.profile.profile_picture.url }}" alt="User" class="post-user-image">
+                <a href="{% url 'profile' post.user.username %}" class="post-username fw-bold no-link">
+                    {{ post.user.username }}
+                </a>
+            </div>
+            
+            <div class="post-content">
+                <!-- Display project title -->
+                <h5 class="post-project-title fw-bold">{{ post.project_title }}</h5>
+
+                <!-- Display project image -->
+                {% if post.project_image %}
+                    <img src="{{ post.project_image.url }}" alt="Project Image" class="post-project-image"
+                    style="width: 600px; height: 400px; object-fit: cover; border-radius: 8px;">
+                {% endif %}
+
+                <!-- Display additional notes -->
+                <p class="mt-2">{{ post.additional_notes }}</p>
+
+                <!-- Display live link and GitHub link if available -->
+                <div class="post-links mt-2">
+                    {% if post.live_link %}
+                        <a href="{{ post.live_link }}" class="btn btn-primary" target="_blank">Live Project</a>
+                    {% endif %}
+                    {% if post.github_link %}
+                        <a href="{{ post.github_link }}" class="btn btn-secondary" target="_blank">GitHub</a>
+                    {% endif %}
+                </div>
+
+                <!-- Display post feedback (likes and views) -->
+                <div class="post-feedback mt-2">
+                    <span class="likes">❤️ {{ post.likes }} Likes</span>
+                    <span class="views">👁️ {{ post.views }} Views</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No posts available.</p>
+        {% endfor %}
     </div>
 </div>
+
+<!-- Middle Column (Feed) 
+<div class="col-md-6 middle-column">
+    <div class="feed-container">
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-header d-flex align-items-center">
+                <img src="{{ post.user.profile_image_url }}" alt="User" class="post-user-image">
+                <span class="post-username fw-bold">{{ post.user.username }}</span>
+            </div>
+            <div class="post-content">
+                <img src="{{ post.project_image.url }}" alt="Project Image" class="post-project-image">
+                <p class="mt-2">{{ post.additional_notes }}</p> 
+                <div class="post-feedback">
+                    <span class="likes">❤️ {{ post.likes }} Likes</span>
+                    <span class="views">👁️ {{ post.views }} Views</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No posts available.</p>
+        {% endfor %}
+    </div>
+</div>
+-->
+
+
+        <!-- Right Column -->
+        <div class="col-md-3 right-column">
+            <!-- Top 4 Most Liked Projects -->
+
+            <div class="right-widget right-widget">
+                <h5 class="text-center fw-bold mb-3">Top Liked Projects</h5>
+                <div class="project-thumbnails scrollable-projects">
+                    {% if top_liked_projects %}
+                    {% for work in top_liked_projects %}
+                    <div class="project-thumbnail">
+                        <!-- Project Image with Modal Trigger -->
+                        <a href="{% url 'log_project_view' work.id %}?open_modal={{ work.id }}" data-bs-toggle="modal"
+                            data-bs-target="#projectDetailsModal{{ work.id }}">
+                            <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid"
+                                style="height: 100px; width: 250px;">
+                        </a>
+
+                        <!-- Project Title -->
+                        <p>{{ work.project_title|truncatechars:30 }}</p>
+                    </div>
+
+                    {% endfor %}
+                    {% else %}
+                    <p>No liked projects found.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+
+
+
+            <!-- User Profile Images -->
+            <div class="right-widget">
+                <h5 class="text-center fw-bold mb-3">Community</h5>
+                <div class="user-list">
+                    {% if users %}
+                    <ul class="list-group">
+                        {% for user in users %}
+                        <li class="list-group-item d-flex align-items-center">
+                            <!-- Profile Image -->
+                            <div class="me-3" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%;">
+                                {% if user.profile.profile_picture %}
+                                <img src="{{ user.profile.profile_picture.url }}" class="rounded-circle"
+                                    alt="{{ user.username }}" style="width: 40px; height: 40px;">
+                                {% else %}
+                                <img src="{% static 'path/to/default/profile/pic.png' %}" class="rounded-circle"
+                                    alt="Default Profile Picture" style="width: 40px; height: 40px;">
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'profile' user.username %}" class="text-decoration-none">{{ user.username }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No users found.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- End of 9 Circular User Profile Images -->
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Modal to Post Prpject 
+<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Create a New Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="project_title" class="form-label">Project Title</label>
+                        <input type="text" class="form-control" id="project_title" name="project_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="project_image" class="form-label">Project Image</label>
+                        <input type="file" class="form-control" id="project_image" name="project_image" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="additional_notes" class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="additional_notes" name="additional_notes"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="live_link" class="form-label">Live Link</label>
+                        <input type="url" class="form-control" id="live_link" name="live_link">
+                    </div>
+                    <div class="mb-3">
+                        <label for="github_link" class="form-label">GitHub Link</label>
+                        <input type="url" class="form-control" id="github_link" name="github_link">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+-->
+
+<!-- Modal to Post Prpject -->
+<div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{% url 'create_post' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}  <!-- Render form fields -->
+                <button type="submit">Submit</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Modal for Most liked Project Details -->
+{% for work in top_liked_projects %}
+<div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="background-color: #F9FAFC;">
+            <div class="modal-header">
+                <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ work.project_image.url }}" class="img-fluid mb-4" alt="{{ work.project_title }}" style="width: 100%; height: 400px; object-fit: cover;">
+                <h6 class="heading-center mb-4">Project Details</h6>
+                <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
+                <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
+                <div class="mb-4">
+                    {{ work.additional_notes|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+<!-- Modals for Most Viewed Projects -->
+{% if top_viewed_projects %}
+    {% for work in top_viewed_projects %}
+        <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content" style="background-color: #F9FAFC;">
+                    <div class="modal-header">
+                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ work.project_image.url }}" class="img-fluid mb-4" alt="{{ work.project_title }}" style="width: 100%; height: 400px; object-fit: cover;">
+                        <h6 class="heading-center mb-4">Project Details</h6>
+                        <p><span>Live Project:</span> <a href="{{ work.live_link }}" target="_blank">{{ work.live_link }}</a></p>
+                        <p><span>GitHub:</span> <a href="{{ work.github_link }}" target="_blank">{{ work.github_link }}</a></p>
+                        <div class="mb-4">
+                            {{ work.additional_notes|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+
+<!-- Modal To Post Project -->
+<div class="modal fade" id="postProjectModal" tabindex="-1" aria-labelledby="postProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postProjectModalLabel">Post Your Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2>Create a New Post</h2>
+                <form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }} <!-- Render the form fields -->
+                    <button type="submit">Submit Post</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
