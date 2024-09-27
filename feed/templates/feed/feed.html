@@ -32,40 +32,41 @@
                     </div>
                     <h4 class="username fw-bold">{{ user.username }}</h4>
                     <hr>
-                   
-<button class="btn btn-dark w-100 py-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#postProjectModal">
-    Post Your Project
-</button>
+                    <button class="btn btn-dark w-100 py-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#postProjectModal">
+                    Post Your Project
+                    </button>
                 </div>
             </div>
-
             <!-- Top 4 Most Viewed Projects -->
             <div class="card mb-4 widget-item-2">
                 <div class="card-body">
-                    <h5 class="text-center fw-bold mb-3">Top Viewed 
-                        <span class="views" style="margin: 0 5px;">👁️ {{ post.views }} </span>
-                        Projects</h5>
+                    <h5 class="text-center fw-bold mb-3"><span class="views" style="margin: 0 5px;">👁️ {{ post.views }}</span>
+                        Top Viewed Projects</h5>
                     <div class="project-thumbnails scrollable-projects">
                         {% if top_viewed_projects %}
-                        
-                        {% for work in top_viewed_projects %}
-                        <div class="project-thumbnail">
-                            <!-- Project Image with Modal Trigger -->
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#projectDetailsModal{{ work.id }}">
-                                <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid" style="height: 100px; width: 250px; object-fit: cover;">
-                            </a>
-                            
-                            <!-- Project Title -->
-                            <p>{{ work.project_title|truncatechars:30 }}</p>
-                        </div>
-                        {% endfor %}
+                            {% for work in top_viewed_projects %}
+                            <div class="project-thumbnail position-relative">
+                                <!-- Project Image with Modal Trigger -->
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#projectDetailsModal{{ work.id }}">
+                                    <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid" style="height: 100px; width: 250px; object-fit: cover;">
+                                </a>
+            
+                                <!-- View Icon and Count in Top Right Corner -->
+                                <div class="views-pill position-absolute" style="top: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.6); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">
+                                    👁️ {{ work.project_views.count }}
+                                </div>
+            
+                                <!-- Project Title -->
+                                <p class="mt-2">{{ work.project_title|truncatechars:30 }}</p>
+                            </div>
+                            {% endfor %}
                         {% else %}
-                   
-                        <p>No viewed projects found.</p>
+                            <p>No viewed projects found.</p>
                         {% endif %}
                     </div>
                 </div>
             </div>
+
         </div>
 
 
@@ -118,38 +119,36 @@
         <!-- Right Column -->
         <div class="col-md-3 right-column">
             <!-- Top 4 Most Liked Projects -->
-
-            <div class="right-widget right-widget">
+            <div class="right-widget">
                 <h5 class="text-center fw-bold mb-3">
-                    Top Liked <span class="likes" style="margin: 0 5px;">❤️ {{ post.likes }}</span>Projects
+                    Top Liked Projects <span class="likes" style="margin: 0 5px;">❤️ {{ post.likes }}</span>
                 </h5>
                 <div class="project-thumbnails scrollable-projects">
                     {% if top_liked_projects %}
-                    {% for work in top_liked_projects %}
-                    <div class="project-thumbnail">
-                        <!-- Project Image with Modal Trigger -->
-                        <a href="{% url 'log_project_view' work.id %}?open_modal={{ work.id }}" data-bs-toggle="modal"
-                            data-bs-target="#projectDetailsModal{{ work.id }}">
-                            <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid"
-                                style="height: 100px; width: 250px;">
-                        </a>
-
-                        <!-- Project Title -->
-                        <p>{{ work.project_title|truncatechars:30 }}</p>
-                    </div>
-
-                    {% endfor %}
+                        {% for work in top_liked_projects %}
+                        <div class="project-thumbnail position-relative">
+                            <!-- Project Image with Modal Trigger -->
+                            <a href="{% url 'log_project_view' work.id %}?open_modal={{ work.id }}" data-bs-toggle="modal"
+                               data-bs-target="#projectDetailsModal{{ work.id }}">
+                                <img src="{{ work.project_image.url }}" alt="{{ work.project_title }}" class="img-fluid"
+                                     style="height: 100px; width: 250px; object-fit: cover;">
+                            </a>
+            
+                            <!-- Like Icon and Count in Top Right Corner -->
+                            <div class="likes-pill position-absolute" style="top: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.6); color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">
+                                ❤️ {{ work.liked_works.count }}
+                            </div>
+            
+                            <!-- Project Title -->
+                            <p class="mt-2">{{ work.project_title|truncatechars:30 }}</p>
+                        </div>
+                        {% endfor %}
                     {% else %}
-                    <p>No liked projects found.</p>
+                        <p>No liked projects found.</p>
                     {% endif %}
-
                 </div>
             </div>
-
-
-
-
-
+            
             <!-- User Profile Images -->
             <div class="right-widget">
                 <h5 class="text-center fw-bold mb-3">Community</h5>
@@ -211,15 +210,19 @@
 
 
 
-
-
-<!-- Modal for Most liked Project Details -->
 {% for work in top_liked_projects %}
 <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content" style="background-color: #F9FAFC;">
             <div class="modal-header">
-                <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                <div class="d-flex align-items-center">
+                    <!-- Profile Picture and Username as Links -->
+                    <a href="{% url 'profile' work.user.username %}" class="d-flex align-items-center text-dark text-decoration-none">
+                        <img src="{{ work.user.profile.profile_picture.url }}" alt="{{ work.user.username }}" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                        <span class="fw-bold">{{ work.user.username }}</span>
+                    </a>
+                </div>
+                <h5 class="modal-title heading-center ms-3" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -239,13 +242,20 @@
 
 
 <!-- Modals for Most Viewed Projects -->
-{% if top_viewed_projects %}
+    {% if top_viewed_projects %}
     {% for work in top_viewed_projects %}
         <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1" aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content" style="background-color: #F9FAFC;">
                     <div class="modal-header">
-                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+                        <div class="d-flex align-items-center">
+                            <!-- Profile Picture and Username as Links -->
+                            <a href="{% url 'profile' work.user.username %}" class="d-flex align-items-center text-dark text-decoration-none">
+                                <img src="{{ work.user.profile.profile_picture.url }}" alt="{{ work.user.username }}" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                                <span class="fw-bold">{{ work.user.username }}</span>
+                            </a>
+                        </div>
+                        <h5 class="modal-title heading-center ms-3" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -262,7 +272,6 @@
         </div>
     {% endfor %}
 {% endif %}
-
 
 
 

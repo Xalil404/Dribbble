@@ -121,9 +121,9 @@
 
                 <div class="dropdown ms-3">
                     <a href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685039/Group_941_umgfkz.png" alt="Profile" class="rounded-circle" width="40" height="40">
+                        <img src="{% if request.user.profile.profile_picture %}{{ request.user.profile.profile_picture.url }}{% else %}https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685039/Group_941_umgfkz.png{% endif %}" alt="Profile" class="rounded-circle" width="40" height="40">
                     </a>
-
+                
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item" href="{% url 'profile' user.username %}">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
