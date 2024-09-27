@@ -124,8 +124,8 @@ def like_project(request, project_id):
         if not created:  # User already liked the project, so remove the like
             like.delete()
 
-        # Redirect back to the project or profile page
-        return redirect('profile', username=request.user.username)  # Or wherever you want to redirect
+        # Redirect back to the page the user came from (using HTTP referer)
+        return redirect(request.META.get('HTTP_REFERER', 'explore'))
 
     return HttpResponse('User not authenticated', status=401)
 
