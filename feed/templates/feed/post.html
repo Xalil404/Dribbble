@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col">
+                <!-- Your header content here -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+<div class="container">
+
+    <!-- Back Button -->
+    <div class="col-md-12 text-start mb-3" style="position: relative;">
+        <a href="{% url 'feed' %}" class="btn btn-dark rounded-circle"
+            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; position: absolute; left: 200px; top: 25px;">
+            <i class="fas fa-arrow-left" style="font-size: 20px;"></i> <!-- Font Awesome icon -->
+        </a>
+    </div>
+
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 middle-column-1">
+            <div class="feed-container">
+                <div class="post">
+                    <div class="post-header d-flex align-items-center">
+                        <a href="{% url 'profile' post.user.username %}" class="d-flex align-items-center text-dark text-decoration-none">
+                            <img src="{{ post.user.profile.profile_picture.url }}" alt="User" class="post-user-image rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                            <span class="post-username fw-bold">{{ post.user.username }}</span>
+                        </a>
+                        
+                    </div>
+                    
+                    <div class="post-content">
+                        <!-- Display project title -->
+                        <h5 class="post-project-title fw-bold text-center">{{ post.project_title }}</h5>
+
+                        <!-- Display project image -->
+                        {% if post.project_image %}
+                            <img src="{{ post.project_image.url }}" alt="Project Image" class="post-project-image"
+                            style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
+                        {% endif %}
+
+                        <!-- Display additional notes -->
+                        <p class="mt-2">{{ post.additional_notes|safe }}</p>
+
+                        <!-- Display live link and GitHub link if available -->
+                        <div class="post-links mt-2 d-flex justify-content-between">
+                            {% if post.live_link %}
+                                <a href="{{ post.live_link }}" class="btn btn-light" style="border: 2px solid black;" target="_blank">Live Project</a>
+                            {% endif %}
+                            {% if post.github_link %}
+                                <a href="{{ post.github_link }}" class="btn btn-dark" target="_blank">GitHub Repo</a>
+                            {% endif %}
+                            <!-- The "Give Feedback" button is removed as per your request -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div class="container">
+    <div class="row">
+
+        <div class="container">
+            <h1>{{ post.project_title }}</h1>
+            <img src="{{ post.project_image.url }}" alt="{{ post.project_title }}" style="width: 100%; height: auto;">
+            <p>{{ post.additional_notes|safe }}</p> 
+        </div>
+
+    </div>
+</div>
+-->
+{% endblock %}

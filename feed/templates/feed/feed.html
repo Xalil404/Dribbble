@@ -76,9 +76,9 @@
         {% for post in posts %}
         <div class="post">
             <div class="post-header d-flex align-items-center">
-                <img src="{{ post.user.profile.profile_picture.url }}" alt="User" class="post-user-image">
-                <a href="{% url 'profile' post.user.username %}" class="post-username fw-bold no-link">
-                    {{ post.user.username }}
+                <a href="{% url 'profile' post.user.username %}" class="d-flex align-items-center text-dark text-decoration-none">
+                    <img src="{{ post.user.profile.profile_picture.url }}" alt="User" class="post-user-image rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+                    <span class="post-username fw-bold">{{ post.user.username }}</span>
                 </a>
             </div>
             
@@ -103,7 +103,11 @@
                     {% if post.github_link %}
                         <a href="{{ post.github_link }}" class="btn btn-dark" target="_blank">GitHub Repo</a>
                     {% endif %}
-                    <a href="" class="btn btn-light" style="border: 2px solid black;">Give Feedback</a>
+                    {% if post.id %}  <!-- Ensure post.id is valid -->
+                    <a href="{% url 'post' post.id %}" class="btn btn-light" style="border: 2px solid black;">Give Feedback</a>
+                    {% else %}
+                    <span class="text-muted">Feedback not available</span>  <!-- Optional message for invalid ID -->
+                    {% endif %}
                 </div>
 
     

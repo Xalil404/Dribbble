@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
@@ -72,6 +73,19 @@ def create_post(request):
 
 
 
+
+
+
+
+
+
+
+def post(request, id):
+    # Retrieve the post by id
+    post = get_object_or_404(Post, id=id)  # Change Work to Post
+
+    # Render the template with post and comments
+    return render(request, 'feed/post.html', {'post': post})
 
 
 
