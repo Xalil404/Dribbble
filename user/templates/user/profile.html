@@ -263,48 +263,105 @@
 
 
 
+<!--Posts tab -->
 
-                <!-- Posts Tab -->
-                <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                    <div class="container mt-5">
-                        {% if profile.posts %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">User Posts</h5>
-                                        <ul class="list-group list-group-flush">
-                                            {% for post in profile.posts %}
-                                            <li class="list-group-item">
-                                                <h6 class="mb-1">{{ post.title }}</h6>
-                                                <p class="mb-1">{{ post.content|truncatewords:20 }}</p>
-                                                <a href="{{ post.get_absolute_url }}"
-                                                    class="btn btn-sm btn-primary">Read More</a>
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
+<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+    <div class="container mt-5">
+        {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 middle-column-p">
+                <div class="feed-container">
+                    <div class="post">
+                        <div class="post-header d-flex align-items-center">
+                            <a href="{% url 'profile' post.user.username %}"
+                                class="d-flex align-items-center text-dark text-decoration-none">
+                                <img src="{{ post.user.profile.profile_picture.url }}" alt="User"
+                                    class="post-user-image rounded-circle"
+                                    style="width: 40px; height: 40px; margin-right: 10px;">
+                                <span class="post-username fw-bold">{{ post.user.username }}</span>
+                            </a>
+                            {% if request.user == post.user %}
+                            <!-- Ellipsis menu for delete action -->
+                            <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                                <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton{{ post.id }}" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="border-radius: 50%; width: 40px; height: 40px;">
+                                    ⋮
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ post.id }}">
+                                    <li>
+                                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#deleteConfirmationModalPost"
+                                            data-url="{% url 'delete_post' post.id %}">
+                                            Delete Post
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="post-content">
+                            <!-- Display project title -->
+                            <h5 class="post-project-title fw-bold text-center">{{ post.project_title }}</h5>
+
+                            <!-- Display project image -->
+                            {% if post.project_image %}
+                            <div style="position: relative;"> <!-- Added a relative positioning wrapper -->
+                                <img src="{{ post.project_image.url }}" alt="Project Image" class="post-project-image"
+                                    style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
+                                
+                            </div>
+                            {% endif %}
+
+                            <!-- Display additional notes -->
+                            <p class="mt-2">{{ post.additional_notes }}</p>
+
+                            <!-- Display live link and GitHub link if available -->
+                            <div class="post-links mt-2 d-flex justify-content-between">
+                                {% if post.live_link %}
+                                <a href="{{ post.live_link }}" class="btn btn-light" style="border: 2px solid black;"
+                                    target="_blank">Live Project</a>
+                                {% endif %}
+                                {% if post.github_link %}
+                                <a href="{{ post.github_link }}" class="btn btn-dark" target="_blank">GitHub Repo</a>
+                                {% endif %}
+                                {% if post.id %} <!-- Ensure post.id is valid -->
+                                <a href="{% url 'post' post.id %}" class="btn btn-light"
+                                    style="border: 2px solid black;">Give Feedback</a>
+                                {% else %}
+                                <span class="text-muted">Feedback not available</span>
+                                <!-- Optional message for invalid ID -->
+                                {% endif %}
                             </div>
                         </div>
-                        {% else %}
-                        <div class="row">
-                            <div class="col-md-6 d-flex align-items-center">
-                                <div class="content-wrapper px-5">
-                                    <div>
-                                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                                        <h5 class="mb-4">Nothing has been posted yet.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-flex justify-content-center align-items-center">
-                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
-                                    class="img-fluid" alt="No Posts Image" style="width: 400px; height: 400px;">
-                            </div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="content-wrapper px-5">
+                    <div>
+                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                        <h5 class="mb-4">Nothing has been posted yet.</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
+                    alt="No Posts Image" style="width: 400px; height: 400px;">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
 
 
 
@@ -468,7 +525,7 @@
 
 
 
-<!-- Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal for Projects -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -544,6 +601,38 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Delete Confirmation Modal for Posts -->
+<div class="modal fade" id="deleteConfirmationModalPost" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #F9FAFC;">
+            <div class="modal-header">
+                <h5 class="modal-title heading-center" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                Are you sure you want to delete this post?
+            </div>
+            <div class="modal-body text-center">
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteFormPost" action="" method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 

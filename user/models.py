@@ -36,7 +36,7 @@ class Work(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     created_at = models.DateTimeField(auto_now_add=True)
     project_title = models.CharField(max_length=200, null=True, blank=True)  # Consider renaming if it represents something else
     live_link = models.URLField(null=True, blank=True)  # Same as above
@@ -46,6 +46,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.project_title or "Untitled Post"
+
 
 
 class Like(models.Model):

@@ -1,6 +1,8 @@
 from django import forms
 from user.models import Post
 
+from .models import PostComment
+
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -14,3 +16,11 @@ class PostForm(forms.ModelForm):
             'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Enter GitHub link'}),
         }
 
+
+class PostCommentForm(forms.ModelForm):
+    class Meta:
+        model = PostComment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'}),
+        }

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import upload_work, delete_work, edit_work, like_project, remove_like, log_project_view
+from .views import upload_work, delete_work, edit_work, like_project, remove_like, log_project_view, delete_post
 
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('like/<int:project_id>/', like_project, name='like_project'),
     path('remove_like/<int:like_id>/', remove_like, name='remove_like'), 
     path('view/<int:project_id>/', log_project_view, name='log_project_view'),
+    path('delete_post/<int:id>/', delete_post, name='delete_post'),
 ]

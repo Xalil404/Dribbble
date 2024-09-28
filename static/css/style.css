@@ -330,6 +330,16 @@ label .asteriskField {
     font-weight: bold;
 }
 
+
+/* To center the post in the post tab but with no scrolling effect */
+.middle-column-p {
+    margin-left: 25%; /* Account for the left fixed column */
+    margin-right: 25%; /* Account for the right fixed column */
+    z-index: 1; /* Ensure it stays beneath any other overlays if necessary */
+    position: relative; /* Retain relative positioning */
+}
+
+
 /*                                                      Project Sorting - Hide the arrow of project ellipsis */
 .dropdown-toggle::after {
     display: none; 
@@ -555,9 +565,6 @@ label .asteriskField {
 }
 
 
-
-
-
 /* Right column styles */
 .right-column {
     position: fixed;
@@ -599,11 +606,6 @@ label .asteriskField {
 }
 
 
-
-
-
-
-
 /* To scroll most liked and most viewed projects */
 .scrollable-projects {
     max-height: 290px;  /* Adjust height as needed */
@@ -619,22 +621,6 @@ label .asteriskField {
     width: 100%;         /* Full width */
     object-fit: cover;   /* Maintain aspect ratio */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Community users css*/
@@ -667,6 +653,19 @@ label .asteriskField {
 
 .user-list::-webkit-scrollbar-thumb:hover {
     background-color: #555; /* Darker color on hover */
+}
+
+
+/*                                                      Post detail page */
+
+.form-control {
+    border-radius: 0.5rem; /* Round the corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.submit-comment {
+    border-radius: 0.5rem; /* Round the corners */
+    margin-left: 10px;
 }
 
 

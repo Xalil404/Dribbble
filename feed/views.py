@@ -3,7 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from user.models import Work, User, Profile, Post
-from .forms import PostForm
+from .forms import PostForm, PostCommentForm
+
+from .models import PostComment
 
 
 
@@ -70,22 +72,32 @@ def create_post(request):
     return render(request, 'feed/feed.html', {'posts': posts, 'form': form})
 
 
+def post(request, id):  # Use 'id' instead of 'post_id'
+    post = get_object_or_404(Post, id=id)
+    # Get comments in reverse order (newest first)
+    comments = post.comments.order_by('-created_at')
 
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = PostCommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.user = request.user
+                comment.save()
+                return redirect('post', id=post.id)  # Pass 'id' here to match the view parameter
+        else:
+            return redirect('account_login')  # Redirect non-logged-in users to login
 
+    else:
+        form = PostCommentForm()
 
-
-
-
-
-
-
-
-def post(request, id):
-    # Retrieve the post by id
-    post = get_object_or_404(Post, id=id)  # Change Work to Post
-
-    # Render the template with post and comments
-    return render(request, 'feed/post.html', {'post': post})
+    context = {
+        'post': post,
+        'comments': comments,
+        'form': form,
+    }
+    return render(request, 'feed/post.html', context)
 
 
 

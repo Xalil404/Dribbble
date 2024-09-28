@@ -19,9 +19,9 @@ def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
     works = Work.objects.filter(user=user)
+    posts = user.posts.all().order_by('-created_at')  # Get all posts related to the user
     open_modal_id = request.GET.get('open_modal')
     print(f"Request GET: {request.GET}")  # Debugging line
-    posts = Post.objects.filter(user=user)
     liked_works = Like.objects.filter(user=user, work__isnull=False).select_related('work')
     liked_posts = Like.objects.filter(user=user, post__isnull=False).select_related('post')
     form = MessageForm()
@@ -166,3 +166,15 @@ def log_project_view(request, project_id):
 
     # Redirect to the profile page, include the comments in context if needed
     return redirect(f'/profile/{work.user.username}/?open_modal={work.id}&modal=projectDetailsModal{work.id}')
+
+
+
+@login_required  # Ensure that only logged-in users can delete posts
+def delete_post(request, id):
+    post = get_object_or_404(Post, id=id)
+
+    # Ensure that the user is authenticated and is the owner of the post
+    if request.user.is_authenticated and post.user == request.user:
+        post.delete()
+    
+    return redirect('profile', username=request.user.username)  # Redirect to the user's profile

@@ -56,4 +56,14 @@ function copyToClipboard() {
 }
 
 
-// S
+// JavaScript for pop up to confirm post deletion
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteModal = document.getElementById('deleteConfirmationModalPost');
+    deleteModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget; // Button that triggered the modal
+        var url = button.getAttribute('data-url'); // Get the URL from data-url attribute
+        var form = deleteModal.querySelector('#deleteFormPost');
+        form.action = url; // Set the form action
+        console.log("Delete URL set to:", url); // Debugging to check if the correct URL is set
+    });
+});

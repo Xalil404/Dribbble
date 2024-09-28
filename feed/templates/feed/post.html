@@ -20,12 +20,13 @@
 <div class="container">
 
     <!-- Back Button -->
-    <div class="col-md-12 text-start mb-3" style="position: relative;">
-        <a href="{% url 'feed' %}" class="btn btn-dark rounded-circle"
-            style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; position: absolute; left: 200px; top: 25px;">
-            <i class="fas fa-arrow-left" style="font-size: 20px;"></i> <!-- Font Awesome icon -->
-        </a>
-    </div>
+<div class="col-md-12 text-start mb-3" style="position: relative;">
+    <button onclick="window.history.back();" class="btn btn-dark rounded-circle"
+        style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; position: absolute; left: 200px; top: 25px;">
+        <i class="fas fa-arrow-left" style="font-size: 20px;"></i> 
+    </button>
+</div>
+
 
 
     <div class="row justify-content-center align-items-center">
@@ -64,6 +65,57 @@
                             <!-- The "Give Feedback" button is removed as per your request -->
                         </div>
                     </div>
+
+
+
+
+
+<!-- Comments Section -->
+<div class="comments-section mt-4">
+    <h5 class="fw-bold">Comments:</h5>
+
+<form method="POST" class="mt-3">
+    {% csrf_token %}
+    <div class="input-group mb-5">
+        <input type="text" name="text" class="form-control" placeholder="Add a comment..." required aria-label="Add a comment">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-dark submit-comment">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+
+
+    {% for comment in comments %}
+    <div class="comment mb-2">
+        <a href="{% url 'profile' comment.user.username %}"
+            class="d-flex align-items-center text-dark text-decoration-none">
+            <img src="{{ comment.user.profile.profile_picture.url }}" alt="User"
+                class="comment-user-image rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">
+            <strong>{{ comment.user.username }}</strong>
+        </a>
+        <p class="mt-1">{{ comment.text }}</p>
+        <small class="text-muted">{{ comment.created_at }}</small>
+    </div>
+    {% empty %}
+    <div class="no-comments d-flex justify-content-between align-items-center">
+        
+         <p>No comments yet ... Write one!</p>
+         <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727518914/405_nrzvxy.png" alt="No Comments" class="no-comments-image" style="width: 300px; height: 300px;">
+    </div>
+{% endfor %}
+
+
+</div>
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -73,34 +125,47 @@
 
 
 
+<!-- Comments Section 
+<div class="comments-section mt-4">
+    <h5>Comments:</h5>
 
+   
+    <form method="POST" class="mt-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<div class="container">
-    <div class="row">
-
-        <div class="container">
-            <h1>{{ post.project_title }}</h1>
-            <img src="{{ post.project_image.url }}" alt="{{ post.project_title }}" style="width: 100%; height: auto;">
-            <p>{{ post.additional_notes|safe }}</p> 
-        </div>
-
+    {% for comment in comments %}
+    <div class="comment mb-2">
+        <a href="{% url 'profile' comment.user.username %}"
+            class="d-flex align-items-center text-dark text-decoration-none">
+            <img src="{{ comment.user.profile.profile_picture.url }}" alt="User"
+                class="comment-user-image rounded-circle" style="width: 30px; height: 30px; margin-right: 5px;">
+            <strong>{{ comment.user.username }}</strong>
+        </a>
+        <p class="mt-1">{{ comment.text }}</p>
+        <small class="text-muted">{{ comment.created_at }}</small>
     </div>
+    {% empty %}
+    <p>No comments yet.</p>
+    {% endfor %}
+
 </div>
+
 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
