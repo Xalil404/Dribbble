@@ -86,9 +86,20 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link active" href="{% url 'feed' %}">Review Projects</a>
                     </li>
+                    <!--
                     <li class="nav-item mx-2">
                         <a class="nav-link active" href="{% url 'inbox' %}">Messages</a>
                     </li>
+                -->
+                <li class="nav-item mx-2">
+                    <a class="nav-link active" href="{% url 'inbox' %}">
+                        Messages
+                        {% if unread_message_count > 0 %}
+                            <span class="badge bg-danger ms-1">{{ unread_message_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                
                     <li class="nav-item mx-2">
                         <a class="nav-link active" href="{% url 'profile' user.username %}">Profile</a>
                     </li>

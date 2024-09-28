@@ -12,8 +12,6 @@
 {% block content %}
 
 
-
-
 <div class="container mt-5">
     <div class="row">
 
@@ -70,7 +68,7 @@
                     <div class="content-wrapper px-5">
                         <div>
                             <h1 class="display-4 mb-4 fw-bold">Oh-No! No results found</h1>
-                            
+
                             <h5 class="mb-4">It seems we can’t find any results based on your search.</h5>
                         </div>
                     </div>
@@ -87,19 +85,20 @@
 
 
     <!-- Load More Button -->
-{% if has_more %}
-<div class="text-center mt-4">
-    {% if user.is_authenticated %}
-    <form method="GET" action="{% url 'search_results' %}">
-        <input type="hidden" name="query" value="{{ query }}">
-        <input type="hidden" name="offset" value="{{ next_offset }}">
-        <button type="submit" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Load More Projects</button>
-    </form>
-    {% else %}
-    <a href="{% url 'account_signup' %}" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Sign Up to View More</a>
+    {% if has_more %}
+    <div class="text-center mt-4">
+        {% if user.is_authenticated %}
+        <form method="GET" action="{% url 'search_results' %}">
+            <input type="hidden" name="query" value="{{ query }}">
+            <input type="hidden" name="offset" value="{{ next_offset }}">
+            <button type="submit" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Load More Projects</button>
+        </form>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="btn btn-dark rounded-pill btn-lg p-3 px-5 mb-5">Sign Up to View
+            More</a>
         {% endif %}
-</div>
-{% endif %}
+    </div>
+    {% endif %}
 
 </div>
 
