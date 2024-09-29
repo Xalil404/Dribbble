@@ -23,14 +23,21 @@
                     <a href="{% url 'upload_work' %}" class="btn btn-dark me-2">Add Work</a>
                     <a href="{% url 'update_profile' %}" class="btn btn-light me-2" style="border: 2px solid black;"
                         data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</a>
-                        <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
+                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal"
+                        data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share
+                        Profile</a>
                     {% else %}
-                    <a href="#" class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Get in Touch</a>
-                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
+                    <a href="#" class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Get
+                        in Touch</a>
+                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal"
+                        data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share
+                        Profile</a>
                     {% endif %}
                     {% else %}
                     <a href="{% url 'account_signup' %}" class="btn btn-dark me-2">Get in Touch</a>
-                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share Profile</a>
+                    <a href="#" class="btn btn-light" style="border: 2px solid black;" data-bs-toggle="modal"
+                        data-bs-target="#shareProfileModal" data-profile-url="{{ request.build_absolute_uri }}">Share
+                        Profile</a>
                     {% endif %}
                 </div>
             </div>
@@ -62,19 +69,6 @@
             <div class="tab-content mt-3" id="profileTabsContent">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <!-- Work Tab -->
                 <div class="tab-pane fade show active" id="work" role="tabpanel" aria-labelledby="work-tab">
                     <div class="row">
@@ -83,11 +77,13 @@
                             <div class="card border" style="position: relative;">
 
                                 <!-- Project Image with modal trigger -->
-                                <a href="{% url 'log_project_view' work.id %}?open_modal={{ work.id }}" class="project-image-link">
-                                    <img src="{{ work.project_image.url }}" class="card-img-top img-fluid" alt="{{ work.project_title }}"
-                                         style="width: 100%; height: 250px; object-fit: cover;">
+                                <a href="{% url 'log_project_view' work.id %}?open_modal={{ work.id }}"
+                                    class="project-image-link">
+                                    <img src="{{ work.project_image.url }}" class="card-img-top img-fluid"
+                                        alt="{{ work.project_title }}"
+                                        style="width: 100%; height: 250px; object-fit: cover;">
                                 </a>
-                                                                
+
                                 <!-- Ellipsis menu in the top-right corner of the image -->
                                 {% if work.user == request.user %}
                                 <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
@@ -114,34 +110,38 @@
                                 <!-- Project Title and Buttons -->
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}</h5>
-                                    
+                                        <h5 class="card-title fw-bold mb-3">{{ work.project_title|truncatechars:30 }}
+                                        </h5>
+
                                         <div class="d-flex align-items-center">
-                                    
-                                            <form action="{% url 'like_project' work.id %}" method="POST" class="d-inline">
+
+                                            <form action="{% url 'like_project' work.id %}" method="POST"
+                                                class="d-inline">
                                                 {% csrf_token %}
-                                                <button type="submit" class="text-danger d-flex align-items-center" title="Like"
-                                                    style="border: none; background: transparent;">
+                                                <button type="submit" class="text-danger d-flex align-items-center"
+                                                    title="Like" style="border: none; background: transparent;">
                                                     <span class="likes mb-3 ms-2">❤️ {{ post.likes }}</span>
                                                     <span class="text-dark mb-3 small ms-2">{{ work.liked_works.count }}</span>
                                                 </button>
                                             </form>
-                                    
+
                                             <div class="d-flex align-items-center mb-3" style="margin-left: 20px;">
                                                 <span class="views ms-2">👁️ {{ post.views }}</span>
                                                 <span class="text-muted small ms-2" id="view-count-{{ work.id }}">{{ work.project_views.count }}</span>
                                             </div>
                                         </div>
                                     </div>
-                                
-                                
+
+
                                     <div class="d-flex justify-content-between">
-                                        <a href="{{ work.live_link }}" class="btn btn-light rounded-pill" target="_blank" style="border: 2px solid black;">View Live
+                                        <a href="{{ work.live_link }}" class="btn btn-light rounded-pill"
+                                            target="_blank" style="border: 2px solid black;">View Live
                                             Project</a>
-                                        <a href="{{ work.github_link }}" class="btn btn-dark rounded-pill" target="_blank">View
+                                        <a href="{{ work.github_link }}" class="btn btn-dark rounded-pill"
+                                            target="_blank">View
                                             GitHub Repo</a>
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -167,70 +167,66 @@
                                             {{ work.additional_notes|safe }}
                                             <!-- Renders Summernote content with rich text formatting -->
                                         </div>
-
-
+  
+                                        <!-- Comments Section -->
 
 
 <!-- Comments Section -->
-<div class="col-md-8 card mb-4 mt-3">
-    <h3 class="fw-bold">Comments:</h3>
-    <div class="card-body">
-        {% if comments %}
-         {% for comment in comments %} 
-            <div class="comments mb-3" style="padding: 10px;">
-                <p class="font-weight-bold">
-                    {% if comment.name %}
-        <a href="{% url 'profile' comment.name %}" style="color: black;">{{ comment.name }}</a>
-    {% else %}
-        Anonymous
-    {% endif %}
-                    <span class="text-muted font-weight-normal">
-                        {{ comment.created_on|date:"F j, Y, g:i a" }}
-                    </span> wrote:
-                </p>
-                <p>{{ comment.body|linebreaks }}</p>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p>No comments yet.</p>
-        {% endif %}
-    </div>
-</div>
 
-<!-- Comment Form -->
-<div class="col-md-8 card mb-4 mt-3">
-    <h3 class="fw-bold">Add a Comment:</h3>
-    <div class="card-body">
-        {% if user.is_authenticated %}
-        <form method="POST" action="{% url 'log_project_view' work.id %}">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="body" class="form-label">Comment</label>
-                <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-dark rounded-pill px-5 py-2">Add Comment</button>
-        </form>
-        {% else %}
-            <p>You need to be logged in to leave a comment.</p>
-            <a href="{% url 'account_login' %}" class="btn btn-dark rounded-pill px-5 py-2">Login to Comment</a>
-        {% endif %}
-    </div>
-</div>
 
-                                       
 
+
+
+
+                                        <!-- Comments Section -->
+                                        <div class="col-md-8 card mb-4 mt-3">
+                                            <h3 class="fw-bold">Comments:</h3>
+                                            <div class="card-body">
+                                                {% if comments %}
+                                                {% for comment in comments %}
+                                                <div class="comments mb-3" style="padding: 10px;">
+                                                    <p class="font-weight-bold">
+                                                        {% if comment.name %}
+                                                        <a href="{% url 'profile' comment.name %}"
+                                                            style="color: black;">{{ comment.name }}</a>
+                                                        {% else %}
+                                                        Anonymous
+                                                        {% endif %}
+                                                        <span class="text-muted font-weight-normal">
+                                                            {{ comment.created_on|date:"F j, Y, g:i a" }}
+                                                        </span> wrote:
+                                                    </p>
+                                                    <p>{{ comment.body|linebreaks }}</p>
+                                                </div>
+                                                {% endfor %}
+                                                {% else %}
+                                                <p>No comments yet.</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     
-
-
-
-
-
-
-
-
-
-
-
+                                        <!-- Comment Form -->
+                                        <div class="col-md-8 card mb-4 mt-3">
+                                            <h3 class="fw-bold">Add a Comment:</h3>
+                                            <div class="card-body">
+                                                {% if user.is_authenticated %}
+                                                <form method="POST" action="{% url 'log_project_view' work.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="mb-3">
+                                                        <label for="body" class="form-label">Comment</label>
+                                                        <textarea class="form-control" id="body" name="body" rows="3"
+                                                            required></textarea>
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="btn btn-dark rounded-pill px-5 py-2">Add Comment</button>
+                                                </form>
+                                                {% else %}
+                                                <p>You need to be logged in to leave a comment.</p>
+                                                <a href="{% url 'account_login' %}"
+                                                    class="btn btn-dark rounded-pill px-5 py-2">Login to Comment</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -259,195 +255,205 @@
                     </div>
                 </div>
 
+                <!--Posts tab -->
+                <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                    <div class="container mt-5">
+                        {% if posts %}
+                        <div class="row">
+                            {% for post in posts %}
+                            <div class="col-md-6 middle-column-p">
+                                <div class="feed-container">
+                                    <div class="post">
+                                        <div class="post-header d-flex align-items-center">
+                                            <a href="{% url 'profile' post.user.username %}"
+                                                class="d-flex align-items-center text-dark text-decoration-none">
+                                                <img src="{{ post.user.profile.profile_picture.url }}" alt="User"
+                                                    class="post-user-image rounded-circle"
+                                                    style="width: 40px; height: 40px; margin-right: 10px;">
+                                                <span class="post-username fw-bold">{{ post.user.username }}</span>
+                                            </a>
+                                            {% if request.user == post.user %}
+                                            <!-- Ellipsis menu for delete action -->
+                                            <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                                                <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton{{ post.id }}" data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    style="border-radius: 50%; width: 40px; height: 40px;">
+                                                    ⋮
+                                                </button>
+                                                <ul class="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton{{ post.id }}">
+                                                    <li>
+                                                        <button type="button" class="dropdown-item"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteConfirmationModalPost"
+                                                            data-url="{% url 'delete_post' post.id %}">
+                                                            Delete Post
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
 
+                                            {% endif %}
 
+                                        </div>
 
+                                        <div class="post-content">
+                                            <!-- Display project title -->
+                                            <h5 class="post-project-title fw-bold text-center">{{ post.project_title }}
+                                            </h5>
 
-<!--Posts tab -->
+                                            <!-- Display project image -->
+                                            {% if post.project_image %}
+                                            <div style="position: relative;">
+                                                <!-- Added a relative positioning wrapper -->
+                                                <img src="{{ post.project_image.url }}" alt="Project Image"
+                                                    class="post-project-image"
+                                                    style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
 
-<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-    <div class="container mt-5">
-        {% if posts %}
-        <div class="row">
-            {% for post in posts %}
-            <div class="col-md-6 middle-column-p">
-                <div class="feed-container">
-                    <div class="post">
-                        <div class="post-header d-flex align-items-center">
-                            <a href="{% url 'profile' post.user.username %}"
-                                class="d-flex align-items-center text-dark text-decoration-none">
-                                <img src="{{ post.user.profile.profile_picture.url }}" alt="User"
-                                    class="post-user-image rounded-circle"
-                                    style="width: 40px; height: 40px; margin-right: 10px;">
-                                <span class="post-username fw-bold">{{ post.user.username }}</span>
-                            </a>
-                            {% if request.user == post.user %}
-                            <!-- Ellipsis menu for delete action -->
-                            <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
-                                <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
-                                    id="dropdownMenuButton{{ post.id }}" data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="border-radius: 50%; width: 40px; height: 40px;">
-                                    ⋮
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ post.id }}">
-                                    <li>
-                                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#deleteConfirmationModalPost"
-                                            data-url="{% url 'delete_post' post.id %}">
-                                            Delete Post
-                                        </button>
-                                    </li>
-                                </ul>
+                                            </div>
+                                            {% endif %}
+
+                                            <!-- Display additional notes -->
+                                            <p class="mt-2">{{ post.additional_notes }}</p>
+
+                                            <!-- Display live link and GitHub link if available -->
+                                            <div class="post-links mt-2 d-flex justify-content-between">
+                                                {% if post.live_link %}
+                                                <a href="{{ post.live_link }}" class="btn btn-light"
+                                                    style="border: 2px solid black;" target="_blank">Live Project</a>
+                                                {% endif %}
+                                                {% if post.github_link %}
+                                                <a href="{{ post.github_link }}" class="btn btn-dark"
+                                                    target="_blank">GitHub Repo</a>
+                                                {% endif %}
+                                                {% if post.id %} <!-- Ensure post.id is valid -->
+                                                <a href="{% url 'post' post.id %}" class="btn btn-light"
+                                                    style="border: 2px solid black;">Give Feedback</a>
+                                                {% else %}
+                                                <span class="text-muted">Feedback not available</span>
+                                                <!-- Optional message for invalid ID -->
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="content-wrapper px-5">
+                                    <div>
+                                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                        <h5 class="mb-4">Nothing has been posted yet.</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                    class="img-fluid" alt="No Posts Image" style="width: 400px; height: 400px;">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
 
-                            {% endif %}
+                <!-- Liked Works Tab -->
+                <div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
+                    <div class="row">
+                        {% for like in liked_works %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card border" style="position: relative;">
+                                <!-- Project Image with modal trigger -->
 
+                                <img src="{{ like.work.project_image.url }}" class="card-img-top img-fluid"
+                                    alt="{{ like.work.project_title }}"
+                                    style="width: 100%; height: 250px; object-fit: cover;">
+
+
+                                <!-- Ellipsis menu in the top-right corner of the image -->
+                                {% if like.user == request.user %}
+                                <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuButton{{ like.work.id }}" data-bs-toggle="dropdown"
+                                        aria-expanded="false" style="border-radius: 50%; width: 40px; height: 40px;">
+                                        ⋮
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end"
+                                        aria-labelledby="dropdownMenuButton{{ like.work.id }}">
+                                        <li>
+                                            <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#removeLikeModal{{ like.work.id }}"
+                                                title="Remove Like">Remove Like</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                <!-- Project Title and Buttons -->
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold mb-3">{{ like.work.project_title|truncatechars:30 }}
+                                    </h5>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ like.work.live_link }}" class="btn btn-light rounded-pill"
+                                            target="_blank" style="border: 2px solid black;">View Live Project</a>
+                                        <a href="{{ like.work.github_link }}" class="btn btn-dark rounded-pill"
+                                            target="_blank">View GitHub Repo</a>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="post-content">
-                            <!-- Display project title -->
-                            <h5 class="post-project-title fw-bold text-center">{{ post.project_title }}</h5>
+                        <!-- Modal for Confirming Removal of Like -->
+                        <div class="modal fade" id="removeLikeModal{{ like.work.id }}" tabindex="-1"
+                            aria-labelledby="removeLikeLabel{{ like.work.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title heading-center" id="removeLikeLabel{{ like.work.id }}">
+                                            Remove Like</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <p>Are you sure you want to remove your liked project?</p>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary btn-lg"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <form action="{% url 'remove_like' like.id %}" method="POST">
+                                            {% csrf_token %}
 
-                            <!-- Display project image -->
-                            {% if post.project_image %}
-                            <div style="position: relative;"> <!-- Added a relative positioning wrapper -->
-                                <img src="{{ post.project_image.url }}" alt="Project Image" class="post-project-image"
-                                    style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
-                                
-                            </div>
-                            {% endif %}
-
-                            <!-- Display additional notes -->
-                            <p class="mt-2">{{ post.additional_notes }}</p>
-
-                            <!-- Display live link and GitHub link if available -->
-                            <div class="post-links mt-2 d-flex justify-content-between">
-                                {% if post.live_link %}
-                                <a href="{{ post.live_link }}" class="btn btn-light" style="border: 2px solid black;"
-                                    target="_blank">Live Project</a>
-                                {% endif %}
-                                {% if post.github_link %}
-                                <a href="{{ post.github_link }}" class="btn btn-dark" target="_blank">GitHub Repo</a>
-                                {% endif %}
-                                {% if post.id %} <!-- Ensure post.id is valid -->
-                                <a href="{% url 'post' post.id %}" class="btn btn-light"
-                                    style="border: 2px solid black;">Give Feedback</a>
-                                {% else %}
-                                <span class="text-muted">Feedback not available</span>
-                                <!-- Optional message for invalid ID -->
-                                {% endif %}
+                                            <button type="submit" class="btn btn-danger btn-lg">Remove Like</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% else %}
-        <div class="row">
-            <div class="col-md-6 d-flex align-items-center">
-                <div class="content-wrapper px-5">
-                    <div>
-                        <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                        <h5 class="mb-4">Nothing has been posted yet.</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex justify-content-center align-items-center">
-                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                    alt="No Posts Image" style="width: 400px; height: 400px;">
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
 
-
-
-
-<!-- Liked Works Tab -->
-<div class="tab-pane fade" id="liked-works" role="tabpanel" aria-labelledby="liked-works-tab">
-    <div class="row">
-        {% for like in liked_works %}
-        <div class="col-md-4 mb-4">
-            <div class="card border" style="position: relative;">
-                <!-- Project Image with modal trigger -->
-                
-                    <img src="{{ like.work.project_image.url }}" class="card-img-top img-fluid" alt="{{ like.work.project_title }}" style="width: 100%; height: 250px; object-fit: cover;">
-                
-                
-                <!-- Ellipsis menu in the top-right corner of the image -->
-                {% if like.user == request.user %}
-                <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
-                    <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton{{ like.work.id }}"
-                        data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50%; width: 40px; height: 40px;">
-                        ⋮
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ like.work.id }}">
-                        <li>
-                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeLikeModal{{ like.work.id }}" title="Remove Like">Remove Like</button>
-                        </li>
-                    </ul>
-                </div>
-                {% endif %}
-
-                <!-- Project Title and Buttons -->
-                <div class="card-body">
-                    <h5 class="card-title fw-bold mb-3">{{ like.work.project_title|truncatechars:30 }}</h5>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ like.work.live_link }}" class="btn btn-light rounded-pill" target="_blank" style="border: 2px solid black;">View Live Project</a>
-                        <a href="{{ like.work.github_link }}" class="btn btn-dark rounded-pill" target="_blank">View GitHub Repo</a>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-        
-
-        <!-- Modal for Confirming Removal of Like -->
-        <div class="modal fade" id="removeLikeModal{{ like.work.id }}" tabindex="-1" aria-labelledby="removeLikeLabel{{ like.work.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title heading-center" id="removeLikeLabel{{ like.work.id }}">Remove Like</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p>Are you sure you want to remove your liked project?</p>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancel</button>
-                        <form action="{% url 'remove_like' like.id %}" method="POST">
-                            {% csrf_token %}
-                            
-                            <button type="submit" class="btn btn-danger btn-lg">Remove Like</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        {% empty %}
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6 d-flex align-items-center">
-                    <div class="content-wrapper px-5">
-                        <div>
-                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
-                            <h5 class="mb-4">Nothing has been liked yet.</h5>
+                        {% empty %}
+                        <div class="container mt-5">
+                            <div class="row">
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="content-wrapper px-5">
+                                        <div>
+                                            <h1 class="display-4 mb-4 fw-bold">Uh-oh!</h1>
+                                            <h5 class="mb-4">Nothing has been liked yet.</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png"
+                                        class="img-fluid" alt="Web Talent Image" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726666674/20_hggzzz.png" class="img-fluid"
-                        alt="Web Talent Image" style="width: 400px; height: 400px;">
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 
                 <!-- Bio Tab -->
                 <div class="tab-pane fade" id="bio" role="tabpanel" aria-labelledby="bio-tab">
