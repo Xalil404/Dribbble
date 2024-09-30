@@ -29,8 +29,8 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
 
 # For summernote to work in production
@@ -39,7 +39,9 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 ALLOWED_HOSTS = [
     'dribbble-e183c3a261b9.herokuapp.com',
     '127.0.0.1', 
-    'localhost'
+    'localhost',
+    'djigggle.com', 
+    'www.djigggle.com'
     ]
 
 
