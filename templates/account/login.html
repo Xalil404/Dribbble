@@ -2,6 +2,8 @@
 {% block body_class %}login-page{% endblock body_class %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
+
 
 {% block head_title %}
     {% trans "Sign In" %}
@@ -24,7 +26,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center card-header-custom">
-                    <h2>{% trans "Sign In to Dribble" %}</h2>
+                    <h2>{% trans "Sign In to Djigggle" %}</h2>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{% url 'account_login' %}">
@@ -32,9 +34,10 @@
 
                         <!-- Social Media Login Buttons -->
                         <div class="social-login-buttons text-center mb-3">
-                            <button type="button" class="btn btn-danger btn-block mb-4">
+
+                            <a href="{% provider_login_url 'google' %}" type="button" class="btn btn-danger btn-block mb-4">
                                 <i class="fab fa-google"></i> {% trans "Login with Google" %}
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-dark btn-block mb-4">
                                 <i class="fab fa-github"></i> {% trans "Login with GitHub" %}
                             </button>
