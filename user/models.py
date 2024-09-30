@@ -73,10 +73,13 @@ class View(models.Model):
 class Comment(models.Model):
     work = models.ForeignKey(Work, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=255)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} on {self.work.project_title}"
+        if self.user:  # Check if user is not None
+            return f"{self.user.username} on {self.work.project_title}"
+        return f"Anonymous on {self.work.project_title}"  # Default to Anonymous
+
+
 

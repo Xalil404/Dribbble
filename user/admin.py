@@ -4,8 +4,8 @@ from .models import Comment, Work, Post
 # To delete project comments
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'work', 'created_on')  # Adjust based on your Comment model fields
-    search_fields = ('name', 'body')  # Allows searching by name and body
+    list_display = ('id', 'user', 'work', 'created_on')  # Adjust based on your Comment model fields
+    search_fields = ('user__username', 'body')  # Allows searching by name and body
     list_filter = ('work', 'created_on')  # Filters for work and date
 
 

@@ -153,11 +153,10 @@ def log_project_view(request, project_id):
     else:
         print("Anonymous user viewed the project.")
 
-    
     if request.method == 'POST':
         
         body = request.POST.get('body')
-        comment = Comment(work=work, name=request.user.username, body=body)
+        comment = Comment(work=work, user=request.user, body=body)
         comment.save()
         print(f'Comment submitted by {request.user.username}: {body}') 
 

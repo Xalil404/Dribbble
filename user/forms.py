@@ -42,8 +42,7 @@ class WorkForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name', 'body']
+        fields = ['body']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write a comment...', 'rows': 4}),
         }

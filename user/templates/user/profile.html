@@ -170,42 +170,36 @@
   
                                         <!-- Comments Section -->
 
+<div class="col-md-8 card mb-4 mt-3">
+    <h3 class="fw-bold">Comments:</h3>
+    <div class="card-body">
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comments mb-3" style="padding: 10px;">
+                    <p class="font-weight-bold">
+                        <a href="{% url 'profile' comment.user.username %}" class="d-flex align-items-center text-dark text-decoration-none">
+                            <img src="{{ comment.user.profile.profile_picture.url|default:'https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png' }}"
+                                 alt="User" class="rounded-circle" 
+                                 style="width: 40px; height: 40px; margin-right: 10px;">
+                            <span class="fw-bold">{{ comment.user.username }}</span>
+                        </a>
+                        <span class="text-muted font-weight-normal">
+                            {{ comment.created_on|date:"F j, Y, g:i a" }}
+                        </span> wrote:
+                    </p>
+                    <p>{{ comment.body|linebreaks }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="no-comments d-flex justify-content-between align-items-center">
+        
+            <p>No comments yet ... Write one!</p>
+            <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727518914/405_nrzvxy.png" alt="No Comments" class="no-comments-image" style="width: 300px; height: 300px;">
+       </div>
+        {% endif %}
+    </div>
+</div>
 
-
-
-
-
-
-
-
-
-                                        <!-- Comments Section -->
-                                        <div class="col-md-8 card mb-4 mt-3">
-                                            <h3 class="fw-bold">Comments:</h3>
-                                            <div class="card-body">
-                                                {% if comments %}
-                                                {% for comment in comments %}
-                                                <div class="comments mb-3" style="padding: 10px;">
-                                                    <p class="font-weight-bold">
-                                                        {% if comment.name %}
-                                                        <a href="{% url 'profile' comment.name %}"
-                                                            style="color: black;">{{ comment.name }}</a>
-                                                        {% else %}
-                                                        Anonymous
-                                                        {% endif %}
-                                                        <span class="text-muted font-weight-normal">
-                                                            {{ comment.created_on|date:"F j, Y, g:i a" }}
-                                                        </span> wrote:
-                                                    </p>
-                                                    <p>{{ comment.body|linebreaks }}</p>
-                                                </div>
-                                                {% endfor %}
-                                                {% else %}
-                                                <p>No comments yet.</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    
                                         <!-- Comment Form -->
                                         <div class="col-md-8 card mb-4 mt-3">
                                             <h3 class="fw-bold">Add a Comment:</h3>
@@ -308,10 +302,11 @@
                                             {% if post.project_image %}
                                             <div style="position: relative;">
                                                 <!-- Added a relative positioning wrapper -->
+                                                <a href="{% url 'post' post.id %}">
                                                 <img src="{{ post.project_image.url }}" alt="Project Image"
                                                     class="post-project-image"
                                                     style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px;">
-
+                                                </a>
                                             </div>
                                             {% endif %}
 
@@ -330,7 +325,7 @@
                                                 {% endif %}
                                                 {% if post.id %} <!-- Ensure post.id is valid -->
                                                 <a href="{% url 'post' post.id %}" class="btn btn-light"
-                                                    style="border: 2px solid black;">Give Feedback</a>
+                                                    style="border: 2px solid black;">Comments</a>
                                                 {% else %}
                                                 <span class="text-muted">Feedback not available</span>
                                                 <!-- Optional message for invalid ID -->

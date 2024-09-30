@@ -72,6 +72,7 @@ def create_post(request):
     return render(request, 'feed/feed.html', {'posts': posts, 'form': form})
 
 
+@login_required
 def post(request, id):  # Use 'id' instead of 'post_id'
     post = get_object_or_404(Post, id=id)
     # Get comments in reverse order (newest first)

@@ -49,6 +49,7 @@ def delete_conversation(request, user_id):
 
 
 #This view shows badges but they don't go away, only way is to delete the conversation
+@login_required
 def message_index(request):
     user = request.user
 
