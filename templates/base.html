@@ -5,6 +5,11 @@
 
 <head>
     <title>Djigggle</title>
+    <!--FavIcon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
+    
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -57,8 +62,8 @@
     
             <!-- Logo (Top Left) -->
             <a class="navbar-brand ms-5 order-2 order-lg-1" href="{% url 'home' %}">
-                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727706286/ds-free_zmcv5x.png"
-                    alt="Logo" class="logo-image" style="width: 60px; height: auto;">
+                <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727721474/logo_1_ipcpcz.png"
+                    alt="Logo" class="logo-image" style="width: 100px; height: auto;">
             </a>
     
             <!-- Navbar Links (Top Left) -->
@@ -190,8 +195,8 @@
     <!-- Footer -->
 <footer class="mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
     <a class="footer" href="">
-        <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727706286/ds-free_zmcv5x.png"
-            alt="Logo" class="logo-image" style="width: 60px; height: auto; margin-left: 20px;">
+        <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727721474/logo_1_ipcpcz.png"
+            alt="Logo" class="logo-image" style="width: 100px; height: auto; margin-left: 20px;">
         <ul class="nav col-md-4 justify-content-end">
             <li class="nav-item px-2"><a href="{% url 'blog-list' %}" class="nav-link px-2 text-dark">Blog</a></li>
             <li class="nav-item px-2"><a href="{% url 'contact' %}" class="nav-link px-2 text-dark">Contact</a></li>
