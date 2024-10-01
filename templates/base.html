@@ -94,7 +94,7 @@
     
                     {% if user.is_authenticated %}
                     <li class="nav-item mx-2">
-                        <a class="nav-link active" href="{% url 'feed' %}">Review Projects</a>
+                        <a class="nav-link active" href="{% url 'feed' %}">Projects Review</a>
                     </li>
                     
                 <li class="nav-item mx-2">
@@ -143,7 +143,10 @@
                 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item" href="{% url 'profile' user.username %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'upload_work' %}">Upload Work</a></li>
+                        <!--
                         <li><a class="dropdown-item" href="#">Settings</a></li>
+                        -->
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
 

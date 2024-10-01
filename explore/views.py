@@ -12,7 +12,7 @@ def explore(request):
     works = Work.objects.annotate(view_count=Count('project_views')).order_by('-view_count')
 
     # Get all works
-    works = Work.objects.all()
+    works = Work.objects.all().order_by('-created_at')
 
     # Limit the works based on the offset and limit
     works = works[offset:offset + limit]
