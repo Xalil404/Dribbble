@@ -4,7 +4,11 @@
 <html class="h-100">
 
 <head>
-    <title>Djigggle</title>
+    <title>Djigggle - Discover the World’s Top Developers</title>
+    <!--MetaTags for Search Engines-->
+    <meta name="Description" content="Djigggle - The platform for developers to showcase their projects, collaborate, and get inspired by fellow programmers.">
+    <meta name="keywords" content="developer, projects, coding, programming, showcase, collaboration, software development, portfolio, web development, app development, frontend, backend, fullstack, code, tech, Djigggle">
+
     <!--FavIcon-->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
@@ -17,6 +21,7 @@
     <!-- Fontawesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
@@ -194,7 +199,7 @@
 
     <!-- Footer -->
 <footer class="mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
-    <a class="footer" href="">
+    <a class="footer" href="{% url 'home' %}">
         <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1727721474/logo_1_ipcpcz.png"
             alt="Logo" class="logo-image" style="width: 100px; height: auto; margin-left: 20px;">
         <ul class="nav col-md-4 justify-content-end">

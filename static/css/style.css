@@ -463,7 +463,7 @@ label .asteriskField {
 
 
 .widget-item {
-    background-color: #EFEFEF; /* Light blue background, change to your desired color */
+    background-color: #EFEFEF; /* Light blue background, change to your desired color EFEFEF */
     border: 1px solid #dcdcdc;
     border-radius: 5px; /* Optional: for rounded corners */
     padding: 15px; /* Optional: for spacing inside the item */
