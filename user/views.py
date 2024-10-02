@@ -18,7 +18,7 @@ from inbox.forms import MessageForm
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
-    works = Work.objects.filter(user=user)
+    works = Work.objects.filter(user=user).order_by('-created_at')
     posts = user.posts.all().order_by('-created_at')  # Get all posts related to the user
     open_modal_id = request.GET.get('open_modal')
     print(f"Request GET: {request.GET}")  # Debugging line
