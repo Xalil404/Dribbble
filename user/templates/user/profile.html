@@ -151,12 +151,23 @@
                             aria-labelledby="projectDetailsLabel{{ work.id }}" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content" style="background-color: #F9FAFC;">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
+                                    <!-- Modal Header -->
+<div class="modal-header d-flex align-items-center">
+    <div class="d-flex align-items-center me-auto">
+        <!-- User Profile Picture and Username -->
+        <a href="{% url 'profile' work.user.username %}" class="d-flex align-items-center text-dark text-decoration-none me-2">
+            <img src="{{ work.user.profile.profile_picture.url|default:'https://res.cloudinary.com/dnbbm9vzi/image/upload/v1726685042/Group_949_oufsqq.png' }}"
+                 alt="{{ work.user.username }}" class="rounded-circle" style="width: 40px; height: 40px; margin-right: 10px;">
+            <span class="fw-bold">{{ work.user.username }}</span>
+        </a>
+    </div>
+    <h5 class="modal-title heading-center" id="projectDetailsLabel{{ work.id }}">{{ work.project_title }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
                                     <div class="modal-body">
+                                        
                                         <img src="{{ work.project_image.url }}" class="img-fluid mb-4"
                                             alt="{{ work.project_title }}"
                                             style="width: 100%; height: 400px; object-fit: cover;">

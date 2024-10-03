@@ -7,11 +7,11 @@ from .forms import PostForm, PostCommentForm
 
 from .models import PostComment
 
+from django.core.paginator import Paginator
 
 
 @login_required
 def social_feed(request):
-
     # Fetch the top 4 most liked projects
     top_liked_projects = (
         Work.objects
@@ -26,11 +26,20 @@ def social_feed(request):
         .order_by('-views_count')[:12]
     )
 
-    # Fetch all posts
-    posts = Post.objects.all().order_by('-created_at') 
+    offset = int(request.GET.get('offset', 0))  # Get the offset (how many posts to skip)
+    limit = 20  # Load 20 posts at a time
+
+    # Fetch posts, ordered by the created_at field
+    posts = Post.objects.all().order_by('-created_at')[offset:offset + limit]  # Limit the posts based on the offset and limit
+
+    # Calculate next offset
+    next_offset = offset + limit
+
+    # Get total posts count to check if more posts exist
+    total_posts = Post.objects.count()
 
     # Get all users (members) excluding the current user
-    users = User.objects.exclude(id=request.user.id).order_by('?')[:9]  # Randomly select 9 members
+    users = User.objects.exclude(id=request.user.id).order_by('?')[:29]  # Randomly select 29 members
 
     form = PostForm()
 
@@ -40,6 +49,8 @@ def social_feed(request):
         'users': users,
         'posts': posts,
         'form': form,
+        'next_offset': next_offset,
+        'has_more': total_posts > next_offset,
     }
 
     return render(request, 'feed/feed.html', context)

@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from user.models import Work
+from django.shortcuts import render, get_object_or_404, redirect
+from user.models import Work, Profile
 
 from django.db.models import Count
+
+from django.contrib.auth.models import User
 
 
 def explore(request):

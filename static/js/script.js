@@ -67,3 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Delete URL set to:", url); // Debugging to check if the correct URL is set
     });
 });
+
+
+// Funtion 
+

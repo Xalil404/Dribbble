@@ -169,6 +169,7 @@ def log_project_view(request, project_id):
 
 
 
+
 @login_required  # Ensure that only logged-in users can delete posts
 def delete_post(request, id):
     post = get_object_or_404(Post, id=id)
@@ -178,3 +179,5 @@ def delete_post(request, id):
         post.delete()
     
     return redirect('profile', username=request.user.username)  # Redirect to the user's profile
+
+
