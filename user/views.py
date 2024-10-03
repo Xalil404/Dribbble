@@ -90,6 +90,7 @@ def upload_work(request):
     return render(request, 'user/upload_work.html', {'form': form})
 
 
+
 @login_required
 def delete_work(request, work_id):
     # Use work_id instead of pk

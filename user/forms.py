@@ -32,7 +32,6 @@ class WorkForm(forms.ModelForm):
             'additional_notes': SummernoteWidget(),  # Use SummernoteWidget for the content field
         }
 
-
     def clean(self):
         cleaned_data = super().clean()
         for field in self.fields:

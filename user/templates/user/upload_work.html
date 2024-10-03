@@ -7,6 +7,16 @@
     <form method="POST" enctype="multipart/form-data" id="upload-form">
         {% csrf_token %}
 
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
         <div class="d-flex justify-content-between mt-3 mb-5">
             <a href="{% url 'profile' user.username %}" class="btn btn-light btn-lg"
                 style="border: 2px solid black;">Cancel</a>
@@ -55,6 +65,7 @@
                 <div class="mb-3">
                     
                     <label for="id_additional_notes" class="form-label">Additional Notes</label>
+                    
                     {{ form.additional_notes }}
                
                 </div>
