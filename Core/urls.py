@@ -18,6 +18,17 @@ from .views import handler404
 from django.contrib import admin
 from django.urls import path, include
 
+
+# these two import statements are for the xml file to be accessible
+from django.http import HttpResponse
+from django.conf import settings
+import os
+
+def serve_sitemap(request):
+    with open(os.path.join(settings.BASE_DIR, 'sitemap.xml'), 'r') as file:
+        return HttpResponse(file.read(), content_type='application/xml')
+
+
 urlpatterns = [
     path('adminka/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
@@ -29,5 +40,6 @@ urlpatterns = [
     path('', include('user.urls')),
     path('', include('contact.urls')),
     path('', include('blog.urls')),
+    path('sitemap.xml', serve_sitemap, name='sitemap'),
 ]
 handler404 = 'Core.views.handler404'
