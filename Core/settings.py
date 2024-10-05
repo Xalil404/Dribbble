@@ -38,6 +38,7 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ALLOWED_HOSTS = [
     'dribbble-e183c3a261b9.herokuapp.com',
+    'djigggle-b28d794de307.herokuapp.com',
     '127.0.0.1', 
     'localhost',
     'djigggle.com', 
