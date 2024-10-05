@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 def explore(request):
     offset = int(request.GET.get('offset', 0))  # Get the offset (how many projects to skip)
-    limit = 10  # Load 10 projects at a time
+    limit = 16  # Load 16 projects at a time
 
     # Get all works, ordered by the number of views in descending order
     works = Work.objects.annotate(view_count=Count('project_views')).order_by('-view_count')
