@@ -24,10 +24,15 @@ from django.http import HttpResponse
 from django.conf import settings
 import os
 
+# Function to serve sitemap
 def serve_sitemap(request):
     with open(os.path.join(settings.BASE_DIR, 'sitemap.xml'), 'r') as file:
         return HttpResponse(file.read(), content_type='application/xml')
 
+# Function to serve robots.txt
+def serve_robots(request):
+    with open(os.path.join(settings.BASE_DIR, 'robots.txt'), 'r') as file:
+        return HttpResponse(file.read(), content_type='text/plain')
 
 urlpatterns = [
     path('adminka/', admin.site.urls),
@@ -41,5 +46,6 @@ urlpatterns = [
     path('', include('contact.urls')),
     path('', include('blog.urls')),
     path('sitemap.xml', serve_sitemap, name='sitemap'),
+    path('robots.txt', serve_robots, name='robots'),
 ]
 handler404 = 'Core.views.handler404'
