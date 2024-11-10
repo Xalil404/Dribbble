@@ -6,7 +6,7 @@ Link to live site [here](https://www.djigggle.com/).
 <img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1729363342/Screenshot_2024-10-19_at_7.42.01_PM_jjknhr.png" width="auto" height="auto" alt="image of the Burger Joint website home page on all devices"></p>
 
 ## Platform features
-* Profile that is shareable
+* Profile that is shareable with two views (personal internal view and external view)
 * Post work with github link and live project link
 * inbox to view messages from other users
 * feed to post projects and get feedback
