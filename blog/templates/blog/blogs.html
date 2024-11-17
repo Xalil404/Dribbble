@@ -89,6 +89,21 @@
                         </div>
                     </div>
                 </div>
+                {% if forloop.counter|divisibleby:3 %}
+        <!-- Insert the in-feed ad snippet here -->
+        <div class="col-md-6 mb-4 text-center">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="-7s+es+1d-4w+3k"
+                 data-ad-client="ca-pub-8949570612548998"
+                 data-ad-slot="2236817579"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        {% endif %}
+        <!-- Insert the in-feed ad snippet End -->
                 {% endfor %}
             </div>
         </div>
