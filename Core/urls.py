@@ -34,6 +34,11 @@ def serve_robots(request):
     with open(os.path.join(settings.BASE_DIR, 'robots.txt'), 'r') as file:
         return HttpResponse(file.read(), content_type='text/plain')
 
+# Function to serve ads.txt
+def serve_ads(request):
+    with open(os.path.join(settings.BASE_DIR, 'ads.txt'), 'r') as file:
+        return HttpResponse(file.read(), content_type='text/plain')
+
 urlpatterns = [
     path('adminka/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
@@ -47,5 +52,6 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('sitemap.xml', serve_sitemap, name='sitemap'),
     path('robots.txt', serve_robots, name='robots'),
+    path('ads.txt', serve_ads, name='ads'),
 ]
 handler404 = 'Core.views.handler404'
