@@ -65,9 +65,28 @@
             </div>
 
 
+           
+
             <!--Explore projects feed -->
             <div class="row">
                 {% for work in works %}
+                <!-- Display ad after every third project -->
+        {% if forloop.counter|divisibleby:6 %}
+        <div class="col-md-4 mb-4">
+            <div class="card border" style="position: relative; display: flex; flex-direction: column; height: 100%;">
+                <!-- AdSense Display Ad -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="fluid"
+                     data-ad-layout-key="-7s+es+1d-4w+3k"
+                     data-ad-client="ca-pub-8949570612548998"
+                     data-ad-slot="2236817579"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    {% endif %}
                 <div class="col-md-4 mb-4">
                     <div class="card border" style="position: relative;">
                         <!-- Project Image with modal trigger -->
@@ -107,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+            
 
                 <!-- Modal for Project Details -->
                 <div class="modal fade" id="projectDetailsModal{{ work.id }}" tabindex="-1"
