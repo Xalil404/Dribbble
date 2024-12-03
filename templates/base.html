@@ -216,6 +216,11 @@
         {% endblock content %}
     </main>
 
+    <!-- Debugging output -->
+<p>Resolved CSS path: {% static 'css/style.css' %}</p>
+<p>Resolved JS path: {% static 'js/script.js' %}</p>
+
+
     <!-- Footer -->
 <footer class="mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
     <a class="footer" href="{% url 'home' %}">

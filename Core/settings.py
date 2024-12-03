@@ -224,12 +224,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-# this should stop css and js files randomly breaking in production
 CLOUDINARY_STORAGE = {
-    'STATIC_IMAGES_EXTENSIONS': ['png', 'jpg', 'jpeg', 'gif'],
-    'invalidate': True,  # Ensure cached files are invalidated
+    'STATICFILES_FOLDER': 'static',
 }
-
 
 STATIC_URL = '/static/'
 
