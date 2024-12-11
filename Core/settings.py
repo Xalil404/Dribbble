@@ -227,7 +227,7 @@ USE_TZ = True
 CLOUDINARY_STORAGE = {
     'STATICFILES_FOLDER': 'static',
 }
-
+# both slashes are needed
 STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
